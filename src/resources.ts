@@ -1,16 +1,26 @@
-import { ImageSource, Loader } from "excalibur";
-import swordPath from "./images/sword.png"; // for parcelv2 this is configured in the .parcelrc
+import { ImageSource, Loader } from 'excalibur';
+import bankDetailPath from './images/bankDetail.png';
+import bankPlainPath from './images/bankPlain.png';
+import leftBankPath from './images/leftBank.png';
+import pathDetailPath from './images/pathDetail.png';
+import pathPlainPath from './images/pathPlain.png';
+import rightBankPath from './images/rightBank.png';
+import skier1downPath from './images/skier1down.png';
+import skier1upPath from './images/skier1up.png';
 
-
-// It is convenient to put your resources in one place
 export const Resources = {
-  Sword: new ImageSource(swordPath) // Final bundled/optimized path from parcel
-} as const; // the 'as const' is a neat typescript trick to get strong typing on your resources. 
-// So when you type Resources.Sword -> ImageSource
+  Skier1Up: new ImageSource(skier1upPath),
+  Skier1Down: new ImageSource(skier1downPath),
+  LeftBank: new ImageSource(leftBankPath),
+  RightBank: new ImageSource(rightBankPath),
+  BankDetail: new ImageSource(bankDetailPath),
+  BankPlain: new ImageSource(bankPlainPath),
+  PathDetail: new ImageSource(pathDetailPath),
+  PathPlain: new ImageSource(pathPlainPath),
+} as const;
 
-// We build a loader and add all of our resources to the boot loader
-// You can build your own loader by extending DefaultLoader
 export const loader = new Loader();
+
 for (const res of Object.values(Resources)) {
   loader.addResource(res);
 }
