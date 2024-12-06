@@ -11,6 +11,7 @@ import {
 import { Bank } from './bank';
 import { Path } from './path';
 import { Player } from './player';
+import { Resources } from './resources';
 
 export class MyLevel extends Scene {
   override onInitialize(engine: Engine): void {
@@ -20,17 +21,19 @@ export class MyLevel extends Scene {
     this.camera.strategy.lockToActorAxis(player, Axis.Y);
     this.camera.zoom = 1;
 
-    const makeStrip = (y: number) => [
-      new Bank(vec(0, y)),
-      ...range(1, 10).map((i) => new Path(vec(i * 16, y))),
-      new Bank(vec(11 * 16, y)),
-    ];
+    // const makeStrip = (y: number) => [
+    //   new Bank(vec(0, y)),
+    //   ...range(1, 10).map((i) => new Path(vec(i * 16, y))),
+    //   new Bank(vec(11 * 16, y)),
+    // ];
 
-    const tiles = range(0, 100).flatMap((i) => makeStrip(i * 16));
+    // const tiles = range(0, 100).flatMap((i) => makeStrip(i * 16));
 
-    tiles.forEach((tile) => {
-      this.add(tile);
-    });
+    // tiles.forEach((tile) => {
+    //   this.add(tile);
+    // });
+
+    Resources.Level1.addToScene(this);
 
     this.add(player);
   }
