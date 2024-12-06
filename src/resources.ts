@@ -8,8 +8,9 @@ import pathPlainPath from './images/pathPlain.png';
 import rightBankPath from './images/rightBank.png';
 import skier1downPath from './images/skier1down.png';
 import skier1upPath from './images/skier1up.png';
-import level1Path from './tiled/level1.tmx';
+import level1Path from './tiled/level1.tmj';
 
+console.log({ level1Path, skier1downPath });
 export const Resources = {
   Skier1Up: new ImageSource(skier1upPath),
   Skier1Down: new ImageSource(skier1downPath),
@@ -23,4 +24,4 @@ export const Resources = {
   Level1: new TiledResource(level1Path),
 } as const;
 
-export const loader = new Loader({ loadables: Object.values(Resources) });
+export const loader = new Loader(Object.values(Resources));

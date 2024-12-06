@@ -1,5 +1,6 @@
 import {
   Actor,
+  clamp,
   Collider,
   CollisionContact,
   Engine,
@@ -25,6 +26,7 @@ import { Resources } from './resources';
 
 export class Player extends Actor {
   private downhillSpeed = Config.playerInitialDownhillSpeed;
+  private lateralSpeed = 0;
 
   constructor(pos: Vector) {
     super({
@@ -75,30 +77,42 @@ export class Player extends Actor {
   }
 
   override update(engine: Engine, elapsedMs: number): void {
-    const dir = Vector.Zero.clone();
+    const delta = (value: number) => value * (elapsedMs / 1000);
 
     if (
       engine.input.keyboard.isHeld(Keys.A) ||
       engine.input.keyboard.isHeld(Keys.Left)
     ) {
-      dir.x -= 1;
-    }
-
-    if (
+      this.lateralSpeed += delta(Config.playerTurnSpeed);
+    } else if (
       engine.input.keyboard.isHeld(Keys.D) ||
       engine.input.keyboard.isHeld(Keys.Right)
     ) {
-      dir.x += 1;
+      this.lateralSpeed -= delta(Config.playerTurnSpeed);
+    } else {
+      this.lateralSpeed +=
+        Math.min(
+          Math.abs(this.lateralSpeed),
+          delta(Config.playerLateralFriction),
+        ) * -Math.sign(this.lateralSpeed);
     }
-
-    this.vel = dir
-      .normalize()
-      .scaleEqual(Config.playerLateralSpeed)
-      .addEqual(Vector.Down.scale(this.downhillSpeed));
 
     if (engine.input.keyboard.wasPressed(Keys.Space)) {
       // this.
     }
+
+    this.lateralSpeed = clamp(
+      this.lateralSpeed,
+      -Config.playerMaxTurn,
+      Config.playerMaxTurn,
+    );
+    this.downhillSpeed += delta(Config.playerDownhillAcceleration);
+
+    this.vel = Vector.Down.clone()
+      .scale(this.downhillSpeed)
+      .add(Vector.Left.clone().scale(this.lateralSpeed));
+
+    this.rotation = this.vel.toAngle() - Math.PI / 2;
   }
 
   override onPostUpdate(engine: Engine, elapsedMs: number): void {
