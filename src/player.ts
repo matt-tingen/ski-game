@@ -22,8 +22,7 @@ export class Player extends Actor {
     super({
       name: 'Player',
       pos,
-      width: 16,
-      height: 16,
+      radius: 12,
       collisionGroup: PlayerCollisionGroup,
       collisionType: CollisionType.Passive,
     });
