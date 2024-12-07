@@ -6,10 +6,12 @@ import {
   CollisionContact,
   CollisionGroupManager,
   CollisionType,
+  Color,
   Engine,
   Keys,
   ParticleEmitter,
   Side,
+  vec,
   Vector,
 } from 'excalibur';
 import { Config } from './Config';
@@ -21,7 +23,7 @@ import { Snowman } from './snowman';
 export const PlayerCollisionGroup = CollisionGroupManager.create('player');
 
 export class Player extends Actor {
-  public enabled = true;
+  public controlsEnabled = true;
   public dead = false;
 
   private downhillSpeed = Config.playerInitialDownhillSpeed;
@@ -42,10 +44,30 @@ export class Player extends Actor {
 
   override onInitialize() {
     this.graphics.add(Resources.Skier1Up.toSprite());
+    this.addWakeEmitter(vec(-4, 0));
+    this.addWakeEmitter(vec(4, 0));
+  }
+
+  private addWakeEmitter(pos: Vector) {
+    const emitter = new ParticleEmitter({
+      pos,
+      emitRate: 200,
+      particle: {
+        startSize: 2,
+        endSize: 2,
+        beginColor: Color.White,
+        endColor: Color.White,
+        opacity: 0.8,
+        fade: true,
+        life: 4000,
+      },
+    });
+
+    this.addChild(emitter);
   }
 
   override update(engine: Engine, elapsedMs: number): void {
-    if (!this.enabled) {
+    if (this.dead) {
       this.vel = Vector.Zero;
 
       return;
@@ -54,12 +76,12 @@ export class Player extends Actor {
     const delta = (value: number) => value * (elapsedMs / 1000);
 
     if (
-      engine.input.keyboard.isHeld(Keys.A) ||
+      (this.controlsEnabled && engine.input.keyboard.isHeld(Keys.A)) ||
       engine.input.keyboard.isHeld(Keys.Left)
     ) {
       this.lateralSpeed += delta(Config.playerTurnSpeed);
     } else if (
-      engine.input.keyboard.isHeld(Keys.D) ||
+      (this.controlsEnabled && engine.input.keyboard.isHeld(Keys.D)) ||
       engine.input.keyboard.isHeld(Keys.Right)
     ) {
       this.lateralSpeed -= delta(Config.playerTurnSpeed);
@@ -71,7 +93,7 @@ export class Player extends Actor {
         ) * -Math.sign(this.lateralSpeed);
     }
 
-    if (engine.input.keyboard.wasPressed(Keys.Space)) {
+    if (this.controlsEnabled && engine.input.keyboard.wasPressed(Keys.Space)) {
       // this.
     }
 
@@ -116,7 +138,7 @@ export class Player extends Actor {
 
     if (otherOwner instanceof Rock) {
       this.dead = true;
-      this.enabled = false;
+      this.controlsEnabled = false;
       sample(Resources.ImpactMining).play();
     } else if (otherOwner instanceof Snowman) {
       this.collisionCount++;

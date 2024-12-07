@@ -21,7 +21,7 @@ import { zIndices } from './zIndices';
 export class MyLevel extends Scene {
   private player = new Player(vec(100, 64));
 
-  private easiness = 2;
+  private easiness = 20;
   private tilemap!: TileMap;
 
   private ms = 0;
@@ -29,22 +29,6 @@ export class MyLevel extends Scene {
   private done = false;
 
   override onInitialize(engine: Engine): void {
-    // Scene.onInitialize is where we recommend you perform the composition for your game
-
-    // const makeStrip = (y: number) => [
-    //   new Bank(vec(0, y)),
-    //   ...range(1, 10).map((i) => new Path(vec(i * 16, y))),
-    //   new Bank(vec(11 * 16, y)),
-    // ];
-
-    // const tiles = range(0, 100).flatMap((i) => makeStrip(i * 16));
-
-    // tiles.forEach((tile) => {
-    //   this.add(tile);
-    // });
-    // console.log(Resources.Level1.layers);
-    // Resources.Level1.addToScene(engine.currentScene);
-
     const seed = new Date().toISOString().split('T')[0];
 
     this.tilemap = createMap(seedRandom(seed));
@@ -56,9 +40,7 @@ export class MyLevel extends Scene {
 
     this.add(this.tilemap);
     this.add(this.player);
-    // this.camera.zoom  1;
     this.camera.x = this.player.pos.x;
-    // this.camera.strategy.lockToActorAxis(player, Axis.Y);
   }
 
   private initObstacles(seed: string) {
@@ -115,8 +97,7 @@ export class MyLevel extends Scene {
 
   override onPostUpdate(engine: Engine, elapsedMs: number): void {
     if (this.player.pos.y >= this.tilemap.pos.y + this.tilemap.height) {
-      this.player.pos.y = this.tilemap.pos.y + this.tilemap.height;
-      this.player.enabled = false;
+      this.player.controlsEnabled = false;
 
       if (!this.done) {
         this.done = true;
@@ -126,8 +107,14 @@ export class MyLevel extends Scene {
       }
     }
 
-    // Called after everything updates in the scene
-    this.camera.y = this.player.pos.y + (engine.drawHeight / 2) * 0.8;
+    this.camera.y = Math.min(
+      this.tilemap.pos.y +
+        this.tilemap.height -
+        engine.drawHeight +
+        engine.halfDrawHeight,
+      // TODO: make same amount of level ahead of player visible regardless of screen size.
+      this.player.pos.y + engine.halfDrawHeight * 0.8,
+    );
   }
 
   override onPreDraw(ctx: ExcaliburGraphicsContext, elapsedMs: number): void {
