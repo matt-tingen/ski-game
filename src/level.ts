@@ -1,5 +1,4 @@
 import {
-  Axis,
   DefaultLoader,
   Engine,
   ExcaliburGraphicsContext,
@@ -12,6 +11,9 @@ import { tilemap } from './tilemap';
 
 export class MyLevel extends Scene {
   private player = new Player(vec(100, 64));
+
+  private start: Date | undefined;
+  private done = false;
 
   override onInitialize(engine: Engine): void {
     // Scene.onInitialize is where we recommend you perform the composition for your game
@@ -42,8 +44,7 @@ export class MyLevel extends Scene {
   }
 
   override onActivate(context: SceneActivationContext<unknown>): void {
-    // Called when Excalibur transitions to this scene
-    // Only 1 scene is active at a time
+    this.start = new Date();
   }
 
   override onDeactivate(context: SceneActivationContext): void {
@@ -59,6 +60,14 @@ export class MyLevel extends Scene {
     if (this.player.pos.y >= tilemap.pos.y + tilemap.height) {
       this.player.pos.y = tilemap.pos.y + tilemap.height;
       this.player.enabled = false;
+
+      if (!this.done) {
+        this.done = true;
+        const end = new Date();
+        const seconds = (end.valueOf() - this.start!.valueOf()) / 1000;
+
+        console.log(`Time: ${seconds}`);
+      }
     }
 
     // Called after everything updates in the scene
