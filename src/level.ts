@@ -1,18 +1,28 @@
 import {
+  CircleCollider,
   DefaultLoader,
   Engine,
   ExcaliburGraphicsContext,
+  PolygonCollider,
   Scene,
   SceneActivationContext,
+  TileMap,
   vec,
 } from 'excalibur';
+import seedRandom from 'seed-random';
 import { Player } from './player';
+import { loader } from './resources';
+import { Rock } from './rock';
+import { Snowman } from './snowman';
+import { sprites } from './sprites';
 import { createMap } from './tilemap';
+import { zIndices } from './zIndices';
 
 export class MyLevel extends Scene {
   private player = new Player(vec(100, 64));
 
-  private tilemap = createMap(2);
+  private easiness = 2;
+  private tilemap!: TileMap;
 
   private ms = 0;
   private start: Date | undefined;
@@ -35,11 +45,50 @@ export class MyLevel extends Scene {
     // console.log(Resources.Level1.layers);
     // Resources.Level1.addToScene(engine.currentScene);
 
+    const seed = new Date().toISOString().split('T')[0];
+
+    this.tilemap = createMap(seedRandom(seed));
+
+    this.initObstacles(seed);
+
+    this.tilemap.z = zIndices.tilemap;
+    this.player.z = zIndices.player;
+
     this.add(this.tilemap);
     this.add(this.player);
     // this.camera.zoom  1;
     this.camera.x = this.player.pos.x;
     // this.camera.strategy.lockToActorAxis(player, Axis.Y);
+  }
+
+  private initObstacles(seed: string) {
+    const random = seedRandom(seed);
+    const obstacleRandom = seedRandom(random().toString());
+    const jiggleRandom = seedRandom(random().toString());
+
+    for (const tile of this.tilemap.tiles) {
+      if (tile.y > 10) {
+        const value = obstacleRandom() * this.easiness;
+        const jiggle = vec(
+          Math.floor(jiggleRandom() * 16),
+          Math.floor(jiggleRandom() * 16),
+        );
+
+        if (value < 0.08) {
+          const rock = new Rock(tile.pos.add(jiggle));
+
+          rock.z = zIndices.obstacle;
+
+          this.add(rock);
+        } else if (value < 0.16) {
+          const snowman = new Snowman(tile.pos.add(jiggle));
+
+          snowman.z = zIndices.obstacle;
+
+          this.add(snowman);
+        }
+      }
+    }
   }
 
   override onPreLoad(loader: DefaultLoader): void {

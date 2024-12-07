@@ -1,24 +1,34 @@
+import { sample } from 'es-toolkit';
 import {
   Actor,
   clamp,
+  Collider,
+  CollisionContact,
   CollisionGroupManager,
   CollisionType,
   Engine,
   Keys,
+  ParticleEmitter,
+  Side,
   Vector,
 } from 'excalibur';
 import { Config } from './Config';
 import { Resources } from './resources';
+import { Rock } from './rock';
+import { Snowman } from './snowman';
 
 // Export the collision group, useful for referencing in other actors
 export const PlayerCollisionGroup = CollisionGroupManager.create('player');
 
 export class Player extends Actor {
   public enabled = true;
+  public dead = false;
 
   private downhillSpeed = Config.playerInitialDownhillSpeed;
   private lateralSpeed = 0;
   private collisionCount = 0;
+
+  private obstacleDisplacement = Vector.Zero.clone();
 
   constructor(pos: Vector) {
     super({
@@ -72,9 +82,12 @@ export class Player extends Actor {
     );
 
     if (this.collisionCount) {
-      this.downhillSpeed -= delta(
-        Config.playerCollisionFriction * this.downhillSpeed,
-      );
+      for (; this.collisionCount > 0; this.collisionCount--) {
+        console.log(this.collisionCount);
+        this.downhillSpeed -= delta(
+          Config.playerCollisionFriction * this.downhillSpeed,
+        );
+      }
     } else {
       this.downhillSpeed += delta(Config.playerDownhillAcceleration);
     }
@@ -88,8 +101,28 @@ export class Player extends Actor {
     this.rotation = this.vel.toAngle() - Math.PI / 2;
   }
 
-  override onCollisionStart(): void {
-    this.collisionCount++;
+  override onPostUpdate(engine: Engine, elapsedMs: number): void {
+    this.obstacleDisplacement = Vector.Zero.clone();
+    this.collisionCount = 0;
+  }
+
+  override onCollisionStart(
+    self: Collider,
+    other: Collider,
+    side: Side,
+    contact: CollisionContact,
+  ): void {
+    const otherOwner = other.owner;
+
+    if (otherOwner instanceof Rock) {
+      this.dead = true;
+      this.enabled = false;
+      sample(Resources.ImpactMining).play();
+    } else if (otherOwner instanceof Snowman) {
+      this.collisionCount++;
+
+      otherOwner.splat(this.vel);
+    }
   }
 
   override onCollisionEnd(): void {

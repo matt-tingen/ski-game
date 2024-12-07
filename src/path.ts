@@ -8,7 +8,7 @@ export class Path extends Actor {
       pos,
       width: 16,
       height: 16,
-      collisionType: CollisionType.PreventCollision,
+      collisionType: CollisionType.Fixed,
     });
   }
 
