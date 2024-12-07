@@ -1,4 +1,4 @@
-import { Actor, Vector } from 'excalibur';
+import { Actor, CollisionType, Vector } from 'excalibur';
 import { Resources } from './resources';
 
 export class Bank extends Actor {
@@ -8,6 +8,7 @@ export class Bank extends Actor {
       pos,
       width: 16,
       height: 16,
+      collisionType: CollisionType.Passive,
     });
   }
 
