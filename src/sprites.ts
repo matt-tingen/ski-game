@@ -28,26 +28,8 @@ export const sprites = {
   bankRight: get(4, 0),
   bankDetail: get(5, 0),
 
+  rock: get(9, 6),
+  snowman: get(9, 5),
+
   flagRedLarge: get(8, 1),
 };
-
-const fullSquare = () =>
-  new PolygonCollider({
-    points: [vec(0, 0), vec(0, 16), vec(16, 16), vec(16, 0)],
-  });
-
-const halfSquare = (offset: number) =>
-  new PolygonCollider({
-    points: [vec(0, 0), vec(0, 16), vec(8, 16), vec(8, 0)],
-    offset: vec(offset, 0),
-  });
-
-const leftHalf = () => halfSquare(0);
-const rightHalf = () => halfSquare(8);
-
-export const colliders = new Map<Sprite, () => Collider>([
-  [sprites.bankPlain, fullSquare],
-  [sprites.bankDetail, fullSquare],
-  [sprites.bankLeft, leftHalf],
-  [sprites.bankRight, rightHalf],
-]);

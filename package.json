@@ -14,12 +14,15 @@
   },
   "dependencies": {
     "@excaliburjs/plugin-tiled": "0.29.2",
-    "excalibur": "0.30.0-alpha.1288"
+    "@matt-tingen/util": "^3.1.0",
+    "excalibur": "0.30.0-alpha.1288",
+    "seed-random": "2.2.0"
   },
   "devDependencies": {
     "@matt-tingen/eslint-config": "0.10.0-rc1",
     "@playwright/test": "^1.49.0",
     "@types/node": "^22.10.0",
+    "@types/seed-random": "2.2.4",
     "eslint": "^8.57.0",
     "prettier": "^3.4.2",
     "prettier-plugin-packagejson": "^2.5.6",

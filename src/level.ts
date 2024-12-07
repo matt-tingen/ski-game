@@ -7,11 +7,14 @@ import {
   vec,
 } from 'excalibur';
 import { Player } from './player';
-import { tilemap } from './tilemap';
+import { createMap } from './tilemap';
 
 export class MyLevel extends Scene {
   private player = new Player(vec(100, 64));
 
+  private tilemap = createMap(2);
+
+  private ms = 0;
   private start: Date | undefined;
   private done = false;
 
@@ -32,7 +35,7 @@ export class MyLevel extends Scene {
     // console.log(Resources.Level1.layers);
     // Resources.Level1.addToScene(engine.currentScene);
 
-    this.add(tilemap);
+    this.add(this.tilemap);
     this.add(this.player);
     // this.camera.zoom  1;
     this.camera.x = this.player.pos.x;
@@ -48,25 +51,29 @@ export class MyLevel extends Scene {
   }
 
   override onDeactivate(context: SceneActivationContext): void {
-    // Called when Excalibur transitions away from this scene
-    // Only 1 scene is active at a time
+    this.recordTime();
   }
 
   override onPreUpdate(engine: Engine, elapsedMs: number): void {
     // Called before anything updates in the scene
   }
 
+  private recordTime() {
+    const end = new Date();
+
+    this.ms += end.valueOf() - this.start!.valueOf();
+  }
+
   override onPostUpdate(engine: Engine, elapsedMs: number): void {
-    if (this.player.pos.y >= tilemap.pos.y + tilemap.height) {
-      this.player.pos.y = tilemap.pos.y + tilemap.height;
+    if (this.player.pos.y >= this.tilemap.pos.y + this.tilemap.height) {
+      this.player.pos.y = this.tilemap.pos.y + this.tilemap.height;
       this.player.enabled = false;
 
       if (!this.done) {
         this.done = true;
-        const end = new Date();
-        const seconds = (end.valueOf() - this.start!.valueOf()) / 1000;
+        this.recordTime();
 
-        console.log(`Time: ${seconds}`);
+        console.log(`Time: ${this.ms / 1000}`);
       }
     }
 
