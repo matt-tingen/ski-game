@@ -14,6 +14,8 @@ import { Resources } from './resources';
 export const PlayerCollisionGroup = CollisionGroupManager.create('player');
 
 export class Player extends Actor {
+  public enabled = true;
+
   private downhillSpeed = Config.playerInitialDownhillSpeed;
   private lateralSpeed = 0;
   private collisionCount = 0;
@@ -22,7 +24,7 @@ export class Player extends Actor {
     super({
       name: 'Player',
       pos,
-      radius: 12,
+      radius: 6,
       collisionGroup: PlayerCollisionGroup,
       collisionType: CollisionType.Passive,
     });
@@ -33,6 +35,12 @@ export class Player extends Actor {
   }
 
   override update(engine: Engine, elapsedMs: number): void {
+    if (!this.enabled) {
+      this.vel = Vector.Zero;
+
+      return;
+    }
+
     const delta = (value: number) => value * (elapsedMs / 1000);
 
     if (

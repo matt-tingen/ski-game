@@ -32,5 +32,7 @@ game
     }),
   })
   .then(() => {
+    // game.debug.collider.showAll = true;
+    game.showDebug(true);
     // Do something after the game starts
   });

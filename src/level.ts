@@ -11,6 +11,8 @@ import { Player } from './player';
 import { tilemap } from './tilemap';
 
 export class MyLevel extends Scene {
+  private player = new Player(vec(100, 64));
+
   override onInitialize(engine: Engine): void {
     // Scene.onInitialize is where we recommend you perform the composition for your game
 
@@ -29,12 +31,10 @@ export class MyLevel extends Scene {
     // Resources.Level1.addToScene(engine.currentScene);
 
     this.add(tilemap);
-
-    const player = new Player(vec(100, 64));
-
-    this.add(player);
-    // this.camera.zoom = 1;
-    this.camera.strategy.lockToActorAxis(player, Axis.Y);
+    this.add(this.player);
+    // this.camera.zoom  1;
+    this.camera.x = this.player.pos.x;
+    // this.camera.strategy.lockToActorAxis(player, Axis.Y);
   }
 
   override onPreLoad(loader: DefaultLoader): void {
@@ -56,7 +56,13 @@ export class MyLevel extends Scene {
   }
 
   override onPostUpdate(engine: Engine, elapsedMs: number): void {
+    if (this.player.pos.y >= tilemap.pos.y + tilemap.height) {
+      this.player.pos.y = tilemap.pos.y + tilemap.height;
+      this.player.enabled = false;
+    }
+
     // Called after everything updates in the scene
+    this.camera.y = this.player.pos.y + (engine.drawHeight / 2) * 0.8;
   }
 
   override onPreDraw(ctx: ExcaliburGraphicsContext, elapsedMs: number): void {
