@@ -81,7 +81,9 @@ export class Player extends Actor {
 
     this.vel = Vector.Down.clone()
       .scale(this.downhillSpeed)
-      .add(Vector.Left.clone().scale(this.lateralSpeed));
+      .add(Vector.Left.clone().scale(this.lateralSpeed))
+      .normalize()
+      .scale(this.downhillSpeed);
 
     this.rotation = this.vel.toAngle() - Math.PI / 2;
   }
