@@ -57,6 +57,7 @@ export class Player extends Actor {
 
   override onInitialize(engine: Engine) {
     this.graphics.add('up', sprites[`skier${this.skierColor}Up`]);
+    this.graphics.add('down', sprites[`skier${this.skierColor}Down`]);
 
     this.addWakeEmitter(vec(-4, 0));
     this.addWakeEmitter(vec(4, 0));
@@ -113,6 +114,7 @@ export class Player extends Actor {
   override update(engine: Engine, elapsedMs: number): void {
     if (this.dead) {
       this.vel = Vector.Zero;
+      this.graphics.use('down');
 
       return;
     }
