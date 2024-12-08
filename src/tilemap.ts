@@ -28,12 +28,6 @@ export const createMap = (random: () => number) => {
     })();
 
     tile.addGraphic(background);
-
-    if (tile.y === tilemap.rows - 1) {
-      if (tile.x === 0 || tile.x === tilemap.columns - 1) {
-        tile.addGraphic(sprites.flagRedLarge);
-      }
-    }
   }
 
   return tilemap;
