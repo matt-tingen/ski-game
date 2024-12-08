@@ -55,9 +55,7 @@ export class Player extends Actor {
       particle: {
         startSize: 2,
         endSize: 2,
-        beginColor: Color.White,
-        endColor: Color.White,
-        opacity: 0.8,
+        beginColor: new Color(195, 217, 232),
         fade: true,
         life: 4000,
       },

@@ -14,12 +14,12 @@ const spriteSheet = SpriteSheet.fromImageSource({
 const get = spriteSheet.getSprite.bind(spriteSheet);
 
 export const sprites = {
-  bankPlain: get(0, 0),
-  bankLeft: get(1, 0),
-  pathPlain: get(2, 0),
-  pathDetail: get(3, 0),
-  bankRight: get(4, 0),
-  bankDetail: get(5, 0),
+  pathPlain: get(0, 0),
+  bankRight: get(1, 0),
+  bankPlain: get(2, 0),
+  bankDetail: get(3, 0),
+  bankLeft: get(4, 0),
+  pathDetail: get(5, 0),
 
   rock: get(9, 6),
   snowman: get(9, 5),
