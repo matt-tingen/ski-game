@@ -1,17 +1,10 @@
-import {
-  CircleCollider,
-  Collider,
-  PolygonCollider,
-  Sprite,
-  SpriteSheet,
-  vec,
-} from 'excalibur';
+import { SpriteSheet } from 'excalibur';
 import { Resources } from './resources';
 
 const spriteSheet = SpriteSheet.fromImageSource({
   image: Resources.Tilemap,
   grid: {
-    rows: 11,
+    rows: 7,
     columns: 12,
     spriteHeight: 16,
     spriteWidth: 16,

@@ -1,5 +1,6 @@
 import { Color, DisplayMode, Engine, FadeInOut } from 'excalibur';
 import { MyLevel } from './level';
+import { MainMenu } from './mainMenu';
 import { loader, Resources } from './resources';
 
 // Goal is to keep main.ts small and just enough to configure the engine
@@ -10,7 +11,8 @@ const game = new Engine({
   displayMode: DisplayMode.FitScreenAndFill, // Display mode tells excalibur how to fill the window
   pixelArt: true, // pixelArt will turn on the correct settings to render pixel art without jaggies or shimmering artifacts
   scenes: {
-    start: MyLevel,
+    game: MyLevel,
+    menu: MainMenu,
   },
   suppressPlayButton: process.env.NODE_ENV === 'development',
   // physics: {
@@ -21,8 +23,7 @@ const game = new Engine({
 });
 
 game
-  .start('start', {
-    // name of the start scene 'start'
+  .start('menu', {
     loader, // Optional loader (but needed for loading images/sounds)
     inTransition: new FadeInOut({
       // Optional in transition

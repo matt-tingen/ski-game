@@ -24,6 +24,7 @@ import pathPlainPath from './images/pathPlain.png';
 import rightBankPath from './images/rightBank.png';
 import skier1downPath from './images/skier1down.png';
 import skier1upPath from './images/skier1up.png';
+import textTilemapPath from './images/textTilemap.png';
 import tilemapPath from './images/tilemap.png';
 import level1Path from './tiled/level1.tmj';
 
@@ -39,6 +40,7 @@ export const Resources = {
   Checker: new ImageSource(checkerPath),
 
   Tilemap: new ImageSource(tilemapPath),
+  TextTilemap: new ImageSource(textTilemapPath),
 
   Level1: new TiledResource(level1Path),
 
