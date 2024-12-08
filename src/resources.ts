@@ -15,28 +15,12 @@ import impactMining1Path from './audio/impactMining_001.ogg';
 import impactMining2Path from './audio/impactMining_002.ogg';
 import impactMining3Path from './audio/impactMining_003.ogg';
 import impactMining4Path from './audio/impactMining_004.ogg';
-import bankDetailPath from './images/bankDetail.png';
-import bankPlainPath from './images/bankPlain.png';
 import checkerPath from './images/checker.png';
-import leftBankPath from './images/leftBank.png';
-import pathDetailPath from './images/pathDetail.png';
-import pathPlainPath from './images/pathPlain.png';
-import rightBankPath from './images/rightBank.png';
-import skier1downPath from './images/skier1down.png';
-import skier1upPath from './images/skier1up.png';
 import textTilemapPath from './images/textTilemap.png';
 import tilemapPath from './images/tilemap.png';
 import level1Path from './tiled/level1.tmj';
 
 export const Resources = {
-  Skier1Up: new ImageSource(skier1upPath),
-  Skier1Down: new ImageSource(skier1downPath),
-  LeftBank: new ImageSource(leftBankPath),
-  RightBank: new ImageSource(rightBankPath),
-  BankDetail: new ImageSource(bankDetailPath),
-  BankPlain: new ImageSource(bankPlainPath),
-  PathDetail: new ImageSource(pathDetailPath),
-  PathPlain: new ImageSource(pathPlainPath),
   Checker: new ImageSource(checkerPath),
 
   Tilemap: new ImageSource(tilemapPath),

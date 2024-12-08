@@ -9,7 +9,8 @@
     "serve": "vite preview",
     "start": "vite --host",
     "test": "pnpm run build && npx playwright test",
-    "test:integration-update": "npx playwright test --update-snapshots"
+    "test:integration-update": "npx playwright test --update-snapshots",
+    "ts": "tsc --noEmit --watch"
   },
   "dependencies": {
     "@excaliburjs/plugin-tiled": "0.29.2",

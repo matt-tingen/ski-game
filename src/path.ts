@@ -1,5 +1,5 @@
 import { Actor, CollisionType, Vector } from 'excalibur';
-import { Resources } from './resources';
+import { sprites } from './sprites';
 
 export class Path extends Actor {
   constructor(pos: Vector) {
@@ -13,9 +13,8 @@ export class Path extends Actor {
   }
 
   override onInitialize() {
-    const img =
-      Math.random() < 0.1 ? Resources.PathDetail : Resources.PathPlain;
+    const img = Math.random() < 0.1 ? sprites.pathDetail : sprites.pathPlain;
 
-    this.graphics.add(img.toSprite());
+    this.graphics.add(img);
   }
 }

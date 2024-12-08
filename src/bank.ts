@@ -1,5 +1,5 @@
 import { Actor, CollisionType, Vector } from 'excalibur';
-import { Resources } from './resources';
+import { sprites } from './sprites';
 
 export class Bank extends Actor {
   constructor(pos: Vector) {
@@ -13,9 +13,8 @@ export class Bank extends Actor {
   }
 
   override onInitialize() {
-    const img =
-      Math.random() < 0.1 ? Resources.BankDetail : Resources.BankPlain;
+    const img = Math.random() < 0.1 ? sprites.bankDetail : sprites.bankPlain;
 
-    this.graphics.add(img.toSprite());
+    this.graphics.add(img);
   }
 }

@@ -42,7 +42,6 @@ export class Player extends Actor {
 
   private leftTurnButton!: Button;
   private rightTurnButton!: Button;
-  private pushAnimation!: Animation;
   private isTouch = window.matchMedia('(pointer: coarse)').matches;
 
   constructor(pos: Vector) {
@@ -57,29 +56,26 @@ export class Player extends Actor {
 
   override onInitialize(engine: Engine) {
     this.graphics.add('up', sprites[`skier${this.skierColor}Up`]);
-    // this.graphics.add('up', sprites.skierPinkUp);
-    // this.graphics.add(Resources.Skier1Up.toSprite());
 
-    // this.graphics.add('up', sprites[`skier${this.skierColor}Up`]);
-    // this.graphics.add('down', sprites[`skier${this.skierColor}Down`]);
     this.addWakeEmitter(vec(-4, 0));
     this.addWakeEmitter(vec(4, 0));
 
-    this.pushAnimation = new Animation({
-      strategy: AnimationStrategy.Loop,
-      frames: [
-        {
-          graphic: sprites[`skier${this.skierColor}Down`],
-          duration: 400,
-        },
-        {
-          graphic: sprites[`skier${this.skierColor}Up`],
-          duration: 1000,
-        },
-      ],
-    });
-
-    this.graphics.add('push', this.pushAnimation);
+    this.graphics.add(
+      'push',
+      new Animation({
+        strategy: AnimationStrategy.Loop,
+        frames: [
+          {
+            graphic: sprites[`skier${this.skierColor}Down`],
+            duration: 400,
+          },
+          {
+            graphic: sprites[`skier${this.skierColor}Up`],
+            duration: 1000,
+          },
+        ],
+      }),
+    );
     this.graphics.use('push');
 
     this.addChild(
