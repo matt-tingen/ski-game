@@ -14,6 +14,7 @@ import {
 import seedRandom from 'seed-random';
 import { font } from './font';
 import { Player } from './player';
+import { RaceTimer } from './RaceTimer';
 import { loader } from './resources';
 import { Rock } from './rock';
 import { Snowman } from './snowman';
@@ -27,9 +28,7 @@ export class MyLevel extends Scene {
   private easiness = 20;
   private tilemap!: TileMap;
 
-  private ms = 0;
-  private start: Date | undefined;
-  private done = false;
+  private timer = new RaceTimer({ x: 100, y: 100 });
 
   override onInitialize(engine: Engine): void {
     const seed = new Date().toISOString().split('T')[0];
@@ -43,6 +42,7 @@ export class MyLevel extends Scene {
 
     this.add(this.tilemap);
     this.add(this.player);
+    this.add(this.timer);
     this.camera.x = this.player.pos.x;
   }
 
@@ -81,47 +81,21 @@ export class MyLevel extends Scene {
   }
 
   override onActivate(context: SceneActivationContext<unknown>): void {
-    this.start = new Date();
+    this.timer.resume();
   }
 
   override onDeactivate(context: SceneActivationContext): void {
-    this.recordTime();
+    this.timer.pause();
   }
 
   override onPreUpdate(engine: Engine, elapsedMs: number): void {
     // Called before anything updates in the scene
   }
 
-  private recordTime() {
-    const end = new Date();
-
-    this.ms += end.valueOf() - this.start!.valueOf();
-  }
-
-  private finish(engine: Engine) {
-    this.done = true;
-
-    const text = new Text({
-      text: `your time:\n${this.ms / 1000} seconds`,
-      font,
-    });
-    const actor = new Actor({
-      pos: vec(engine.halfDrawWidth, engine.halfDrawHeight),
-    });
-
-    actor.graphics.add(text);
-
-    this.add(actor);
-  }
-
   override onPostUpdate(engine: Engine, elapsedMs: number): void {
     if (this.player.pos.y >= this.tilemap.pos.y + this.tilemap.height) {
+      this.timer.pause();
       this.player.controlsEnabled = false;
-
-      if (!this.done) {
-        this.recordTime();
-        this.finish(engine);
-      }
     }
 
     this.camera.y = Math.min(
