@@ -1,6 +1,8 @@
 import { noop, sample } from 'es-toolkit';
 import {
   Actor,
+  Animation,
+  AnimationStrategy,
   clamp,
   Collider,
   CollisionContact,
@@ -10,7 +12,6 @@ import {
   Engine,
   Keys,
   ParticleEmitter,
-  ScreenElement,
   Side,
   vec,
   Vector,
@@ -20,13 +21,18 @@ import { Config } from './Config';
 import { Resources } from './resources';
 import { Rock } from './rock';
 import { Snowman } from './snowman';
+import { sprites } from './sprites';
 
 // Export the collision group, useful for referencing in other actors
 export const PlayerCollisionGroup = CollisionGroupManager.create('player');
 
+export type SkierColor = 'Pink' | 'Green';
+
 export class Player extends Actor {
   public controlsEnabled = true;
   public dead = false;
+
+  private skierColor: SkierColor = 'Pink';
 
   private downhillSpeed = Config.playerInitialDownhillSpeed;
   private lateralSpeed = 0;
@@ -36,6 +42,7 @@ export class Player extends Actor {
 
   private leftTurnButton!: Button;
   private rightTurnButton!: Button;
+  private pushAnimation!: Animation;
   private isTouch = window.matchMedia('(pointer: coarse)').matches;
 
   constructor(pos: Vector) {
@@ -49,9 +56,31 @@ export class Player extends Actor {
   }
 
   override onInitialize(engine: Engine) {
-    this.graphics.add(Resources.Skier1Up.toSprite());
+    this.graphics.add('up', sprites[`skier${this.skierColor}Up`]);
+    // this.graphics.add('up', sprites.skierPinkUp);
+    // this.graphics.add(Resources.Skier1Up.toSprite());
+
+    // this.graphics.add('up', sprites[`skier${this.skierColor}Up`]);
+    // this.graphics.add('down', sprites[`skier${this.skierColor}Down`]);
     this.addWakeEmitter(vec(-4, 0));
     this.addWakeEmitter(vec(4, 0));
+
+    this.pushAnimation = new Animation({
+      strategy: AnimationStrategy.Loop,
+      frames: [
+        {
+          graphic: sprites[`skier${this.skierColor}Down`],
+          duration: 400,
+        },
+        {
+          graphic: sprites[`skier${this.skierColor}Up`],
+          duration: 1000,
+        },
+      ],
+    });
+
+    this.graphics.add('push', this.pushAnimation);
+    this.graphics.use('push');
 
     this.addChild(
       (this.leftTurnButton = new Button(noop, {
@@ -123,7 +152,6 @@ export class Player extends Actor {
 
     if (this.collisionCount) {
       for (; this.collisionCount > 0; this.collisionCount--) {
-        console.log(this.collisionCount);
         this.downhillSpeed -= delta(
           Config.playerCollisionFriction * this.downhillSpeed,
         );
@@ -139,6 +167,12 @@ export class Player extends Actor {
       .scale(this.downhillSpeed);
 
     this.rotation = this.vel.toAngle() - Math.PI / 2;
+
+    this.graphics.use(
+      this.downhillSpeed < 100 && Math.abs(this.lateralSpeed) < 50
+        ? 'push'
+        : 'up',
+    );
   }
 
   override onPostUpdate(engine: Engine, elapsedMs: number): void {

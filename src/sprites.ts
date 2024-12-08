@@ -25,4 +25,9 @@ export const sprites = {
   snowman: get(9, 5),
 
   flagRedLarge: get(8, 1),
+
+  skierGreenDown: get(10, 5),
+  skierGreenUp: get(11, 5),
+  skierPinkDown: get(10, 6),
+  skierPinkUp: get(11, 6),
 };
