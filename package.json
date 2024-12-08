@@ -4,11 +4,10 @@
   "author": "Matt Tingen <matt.tingen@gmail.com>",
   "scripts": {
     "build": "tsc && vite build",
-    "dev": "vite",
     "format": "prettier --ignore-path .gitignore --write src",
     "lint": "eslint src",
     "serve": "vite preview",
-    "start": "vite",
+    "start": "vite --host",
     "test": "pnpm run build && npx playwright test",
     "test:integration-update": "npx playwright test --update-snapshots"
   },

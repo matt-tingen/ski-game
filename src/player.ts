@@ -1,4 +1,4 @@
-import { sample } from 'es-toolkit';
+import { noop, sample } from 'es-toolkit';
 import {
   Actor,
   clamp,
@@ -10,10 +10,12 @@ import {
   Engine,
   Keys,
   ParticleEmitter,
+  ScreenElement,
   Side,
   vec,
   Vector,
 } from 'excalibur';
+import { Button } from './Button';
 import { Config } from './Config';
 import { Resources } from './resources';
 import { Rock } from './rock';
@@ -32,6 +34,10 @@ export class Player extends Actor {
 
   private obstacleDisplacement = Vector.Zero.clone();
 
+  private leftTurnButton!: Button;
+  private rightTurnButton!: Button;
+  private isTouch = window.matchMedia('(pointer: coarse)').matches;
+
   constructor(pos: Vector) {
     super({
       name: 'Player',
@@ -42,10 +48,24 @@ export class Player extends Actor {
     });
   }
 
-  override onInitialize() {
+  override onInitialize(engine: Engine) {
     this.graphics.add(Resources.Skier1Up.toSprite());
     this.addWakeEmitter(vec(-4, 0));
     this.addWakeEmitter(vec(4, 0));
+
+    this.addChild(
+      (this.leftTurnButton = new Button(noop, {
+        width: engine.halfDrawWidth,
+        height: engine.drawHeight,
+      })),
+    );
+    this.addChild(
+      (this.rightTurnButton = new Button(noop, {
+        width: engine.halfDrawWidth,
+        x: engine.halfDrawWidth,
+        height: engine.drawHeight,
+      })),
+    );
   }
 
   private addWakeEmitter(pos: Vector) {
@@ -74,13 +94,17 @@ export class Player extends Actor {
     const delta = (value: number) => value * (elapsedMs / 1000);
 
     if (
-      (this.controlsEnabled && engine.input.keyboard.isHeld(Keys.A)) ||
-      engine.input.keyboard.isHeld(Keys.Left)
+      this.controlsEnabled &&
+      (engine.input.keyboard.isHeld(Keys.A) ||
+        engine.input.keyboard.isHeld(Keys.Left) ||
+        (this.isTouch && this.leftTurnButton.isDown))
     ) {
       this.lateralSpeed += delta(Config.playerTurnSpeed);
     } else if (
-      (this.controlsEnabled && engine.input.keyboard.isHeld(Keys.D)) ||
-      engine.input.keyboard.isHeld(Keys.Right)
+      this.controlsEnabled &&
+      (engine.input.keyboard.isHeld(Keys.D) ||
+        engine.input.keyboard.isHeld(Keys.Right) ||
+        (this.isTouch && this.rightTurnButton.isDown))
     ) {
       this.lateralSpeed -= delta(Config.playerTurnSpeed);
     } else {
@@ -89,10 +113,6 @@ export class Player extends Actor {
           Math.abs(this.lateralSpeed),
           delta(Config.playerLateralFriction),
         ) * -Math.sign(this.lateralSpeed);
-    }
-
-    if (this.controlsEnabled && engine.input.keyboard.wasPressed(Keys.Space)) {
-      // this.
     }
 
     this.lateralSpeed = clamp(
