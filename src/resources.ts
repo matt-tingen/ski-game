@@ -1,4 +1,3 @@
-import { TiledResource } from '@excaliburjs/plugin-tiled';
 import { ImageSource, Loader, Sound } from 'excalibur';
 import footstepCarpet0Path from './audio/footstep_carpet_000.ogg';
 import footstepCarpet1Path from './audio/footstep_carpet_001.ogg';
@@ -18,15 +17,12 @@ import impactMining4Path from './audio/impactMining_004.ogg';
 import checkerPath from './images/checker.png';
 import textTilemapPath from './images/textTilemap.png';
 import tilemapPath from './images/tilemap.png';
-import level1Path from './tiled/level1.tmj';
 
 export const Resources = {
   Checker: new ImageSource(checkerPath),
 
   Tilemap: new ImageSource(tilemapPath),
   TextTilemap: new ImageSource(textTilemapPath),
-
-  Level1: new TiledResource(level1Path),
 
   FootstepCarpet: [
     new Sound(footstepCarpet0Path),

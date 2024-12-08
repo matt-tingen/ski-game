@@ -13,7 +13,6 @@
     "ts": "tsc --noEmit --watch"
   },
   "dependencies": {
-    "@excaliburjs/plugin-tiled": "0.29.2",
     "@matt-tingen/util": "^3.1.0",
     "es-toolkit": "1.29.0",
     "excalibur": "0.30.0-alpha.1288",
