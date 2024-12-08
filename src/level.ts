@@ -17,6 +17,7 @@ import { Player } from './player';
 import { RaceTimer } from './RaceTimer';
 import { loader } from './resources';
 import { Rock } from './rock';
+import { SlolamFlag } from './SlolamFlag';
 import { Snowman } from './snowman';
 import { sprites } from './sprites';
 import { createMap } from './tilemap';
@@ -50,23 +51,34 @@ export class MyLevel extends Scene {
     const random = seedRandom(seed);
     const obstacleRandom = seedRandom(random().toString());
     const jiggleRandom = seedRandom(random().toString());
+    const slolamRandom = seedRandom(random().toString());
+    const slolamDirectionRandom = seedRandom(random().toString());
 
     for (const tile of this.tilemap.tiles) {
-      if (tile.y > 10) {
-        const value = obstacleRandom() * this.easiness;
+      if (tile.y > 10 && tile.y < this.tilemap.rows - 2) {
+        const obstacleValue = obstacleRandom() * this.easiness;
+        const slolamValue = slolamRandom();
         const jiggle = vec(
           Math.floor(jiggleRandom() * 16),
           Math.floor(jiggleRandom() * 16),
         );
+        const direction = slolamDirectionRandom() > 0.5 ? 'right' : 'left';
+        const pos = tile.pos.add(jiggle);
 
-        if (value < 0.08) {
-          const rock = new Rock(tile.pos.add(jiggle));
+        if (slolamValue < 0.02) {
+          const flag = new SlolamFlag(direction, pos);
+
+          flag.z = zIndices.pickup;
+
+          this.add(flag);
+        } else if (obstacleValue < 0.08) {
+          const rock = new Rock(pos);
 
           rock.z = zIndices.obstacle;
 
           this.add(rock);
-        } else if (value < 0.16) {
-          const snowman = new Snowman(tile.pos.add(jiggle));
+        } else if (obstacleValue < 0.16) {
+          const snowman = new Snowman(pos);
 
           snowman.z = zIndices.obstacle;
 

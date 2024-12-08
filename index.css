@@ -1,0 +1,12 @@
+body,
+html,
+:root {
+  margin: 0;
+  background: #2185d0;
+}
+
+#container {
+  width: 100lvw;
+  display: grid;
+  place-items: center;
+}

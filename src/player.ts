@@ -20,6 +20,7 @@ import { Button } from './Button';
 import { Config } from './Config';
 import { Resources } from './resources';
 import { Rock } from './rock';
+import { SlolamSpeedup } from './SlolamSpeedup';
 import { Snowman } from './snowman';
 import { sprites } from './sprites';
 
@@ -192,6 +193,9 @@ export class Player extends Actor {
       this.collisionCount++;
 
       otherOwner.splat(this.vel);
+    } else if (otherOwner instanceof SlolamSpeedup) {
+      this.downhillSpeed *= 1.2;
+      Resources.Powerup.play();
     }
   }
 
