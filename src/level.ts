@@ -1,4 +1,5 @@
 import {
+  Actor,
   CircleCollider,
   DefaultLoader,
   Engine,
@@ -6,10 +7,12 @@ import {
   PolygonCollider,
   Scene,
   SceneActivationContext,
+  Text,
   TileMap,
   vec,
 } from 'excalibur';
 import seedRandom from 'seed-random';
+import { font } from './font';
 import { Player } from './player';
 import { loader } from './resources';
 import { Rock } from './rock';
@@ -95,15 +98,29 @@ export class MyLevel extends Scene {
     this.ms += end.valueOf() - this.start!.valueOf();
   }
 
+  private finish(engine: Engine) {
+    this.done = true;
+
+    const text = new Text({
+      text: `your time:\n${this.ms / 1000} seconds`,
+      font,
+    });
+    const actor = new Actor({
+      pos: vec(engine.halfDrawWidth, engine.halfDrawHeight),
+    });
+
+    actor.graphics.add(text);
+
+    this.add(actor);
+  }
+
   override onPostUpdate(engine: Engine, elapsedMs: number): void {
     if (this.player.pos.y >= this.tilemap.pos.y + this.tilemap.height) {
       this.player.controlsEnabled = false;
 
       if (!this.done) {
-        this.done = true;
         this.recordTime();
-
-        console.log(`Time: ${this.ms / 1000}`);
+        this.finish(engine);
       }
     }
 
