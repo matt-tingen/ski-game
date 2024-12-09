@@ -1,4 +1,10 @@
-import { Color, DisplayMode, Engine, FadeInOut } from 'excalibur';
+import {
+  Color,
+  DisplayMode,
+  Engine,
+  FadeInOut,
+  ImageFiltering,
+} from 'excalibur';
 import { ControlledSound } from './ControlledSound';
 import { MyLevel } from './level';
 import { MainMenu } from './mainMenu';
@@ -11,6 +17,9 @@ const game = new Engine({
   canvasElementId: 'game',
   displayMode: DisplayMode.FitScreen,
   pixelArt: true,
+  antialiasing: {
+    filtering: ImageFiltering.Pixel,
+  },
   scenes: {
     game: MyLevel,
     menu: MainMenu,
