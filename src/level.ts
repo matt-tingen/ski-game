@@ -1,43 +1,41 @@
 import {
-  Actor,
-  CircleCollider,
+  Axis,
+  BoundingBox,
   DefaultLoader,
   Engine,
   ExcaliburGraphicsContext,
   Keys,
-  PolygonCollider,
   Scene,
   SceneActivationContext,
-  Text,
   TileMap,
   vec,
 } from 'excalibur';
 import seedRandom from 'seed-random';
-import { font } from './font';
+import { LockToActorAxisOffsetCameraStrategy } from './LockToActorAxisOffsetCameraStrategy';
 import { Player } from './player';
 import { RaceTimer } from './RaceTimer';
-import { loader } from './resources';
 import { Rock } from './rock';
 import { SlolamFlag } from './SlolamFlag';
 import { Snowman } from './snowman';
-import { sprites } from './sprites';
 import { createMap } from './tilemap';
 import { zIndices } from './zIndices';
 
 export class MyLevel extends Scene {
-  private player = new Player(vec(100, 64));
+  private player!: Player;
 
   private easiness = 20;
   private tilemap!: TileMap;
 
+  private done = false;
   private timer = new RaceTimer({ x: 100, y: 100 });
 
   override onInitialize(engine: Engine): void {
     const seed = new Date().toISOString().split('T')[0];
 
     this.tilemap = createMap(seedRandom(seed));
-
     this.initObstacles(seed);
+
+    this.player = new Player(vec(this.tilemap.width / 2, 16));
 
     this.tilemap.z = zIndices.tilemap;
     this.player.z = zIndices.player;
@@ -46,6 +44,18 @@ export class MyLevel extends Scene {
     this.add(this.player);
     this.add(this.timer);
     this.camera.x = this.player.pos.x;
+
+    this.camera.addStrategy(
+      new LockToActorAxisOffsetCameraStrategy(this.player, Axis.Y, 0.2),
+    );
+    this.camera.strategy.limitCameraBounds(
+      new BoundingBox({
+        left: -Infinity,
+        right: Infinity,
+        top: this.tilemap.y,
+        bottom: this.tilemap.y + this.tilemap.height,
+      }),
+    );
   }
 
   private initObstacles(seed: string) {
@@ -56,7 +66,7 @@ export class MyLevel extends Scene {
     const slolamDirectionRandom = seedRandom(random().toString());
 
     for (const tile of this.tilemap.tiles) {
-      if (tile.y > 10 && tile.y < this.tilemap.rows - 2) {
+      if (tile.y > 8 && tile.y < this.tilemap.rows - 2) {
         const obstacleValue = obstacleRandom() * this.easiness;
         const slolamValue = slolamRandom();
         const jiggle = vec(
@@ -108,19 +118,18 @@ export class MyLevel extends Scene {
   }
 
   override onPostUpdate(engine: Engine, elapsedMs: number): void {
-    if (this.player.pos.y >= this.tilemap.pos.y + this.tilemap.height) {
+    if (
+      this.player.pos.y >= this.tilemap.pos.y + this.tilemap.height + 16 &&
+      !this.done
+    ) {
+      this.done = true;
       this.timer.pause();
       this.player.controlsEnabled = false;
+      this.player.dead = true;
+      this.camera.zoomOverTime(engine.drawHeight / this.tilemap.height, 2000);
     }
 
-    this.camera.y = Math.min(
-      this.tilemap.pos.y +
-        this.tilemap.height -
-        engine.drawHeight +
-        engine.halfDrawHeight,
-      // TODO: make same amount of level ahead of player visible regardless of screen size.
-      this.player.pos.y + engine.halfDrawHeight * 0.8,
-    );
+    // this.camera.y = this.player.pos.y + engine.halfDrawHeight * 0.8;
 
     if (engine.input.keyboard.wasPressed(Keys.R)) {
       engine.goToScene('reset');

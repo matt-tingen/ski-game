@@ -5,7 +5,7 @@ import { sprites } from './sprites';
 
 export const createMap = (random: () => number) => {
   const tilemap = new TileMap({
-    rows: 60,
+    rows: 100,
     columns: 16,
     tileWidth: 16,
     tileHeight: 16,

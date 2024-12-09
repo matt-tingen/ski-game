@@ -6,7 +6,7 @@ export class SlolamTrigger extends Actor {
     super({
       name: 'SlolamTrigger',
       pos,
-      width: 10,
+      width: 14,
       height: 2,
       // offset: vec
       collisionType: CollisionType.Fixed,

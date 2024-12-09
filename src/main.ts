@@ -21,9 +21,8 @@ const game = new Engine({
 
 game
   .start('game', {
-    loader, // Optional loader (but needed for loading images/sounds)
+    loader,
     inTransition: new FadeInOut({
-      // Optional in transition
       duration: 1000,
       direction: 'in',
       color: Color.ExcaliburBlue,

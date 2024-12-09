@@ -22,7 +22,7 @@ export class SlolamFlag extends Actor {
       name: 'SlolamFlag',
       pos,
       width: 4,
-      height: 6,
+      height: 4,
       offset: vec(direction === 'left' ? -2 : 2, -5),
       collisionType: CollisionType.Fixed,
     });
