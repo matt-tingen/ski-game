@@ -100,6 +100,7 @@ export class Player extends Actor {
     btn.addEventListener('pointercancel', this.onButtonUp);
   }
 
+  // TODO: this doesn't fire when resetting
   onPostKill(): void {
     [this.leftTurnButton, this.rightTurnButton].forEach((btn) => {
       btn.removeEventListener('pointerdown', this.onButtonDown);

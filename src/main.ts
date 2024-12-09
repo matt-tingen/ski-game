@@ -1,4 +1,5 @@
 import { Color, DisplayMode, Engine, FadeInOut } from 'excalibur';
+import { ControlledSound } from './ControlledSound';
 import { MyLevel } from './level';
 import { MainMenu } from './mainMenu';
 import { Reset } from './reset';
@@ -33,3 +34,12 @@ game
     game.showDebug(true);
     // Do something after the game starts
   });
+
+const muteBtn = document.getElementById('mute')!;
+
+muteBtn.classList.toggle('muted', ControlledSound.muted);
+
+muteBtn.addEventListener('click', () => {
+  ControlledSound.muted = !ControlledSound.muted;
+  muteBtn.classList.toggle('muted', ControlledSound.muted);
+});

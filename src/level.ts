@@ -95,10 +95,12 @@ export class MyLevel extends Scene {
 
   override onActivate(context: SceneActivationContext<unknown>): void {
     this.timer.resume();
+    document.getElementById('game-btns')?.classList.remove('hidden');
   }
 
   override onDeactivate(context: SceneActivationContext): void {
     this.timer.pause();
+    document.getElementById('game-btns')?.classList.add('hidden');
   }
 
   override onPreUpdate(engine: Engine, elapsedMs: number): void {

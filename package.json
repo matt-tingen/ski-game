@@ -16,6 +16,7 @@
     "@matt-tingen/util": "^3.1.0",
     "es-toolkit": "1.29.0",
     "excalibur": "0.30.0-alpha.1288",
+    "nes.css": "2.3.0",
     "seed-random": "2.2.0"
   },
   "devDependencies": {

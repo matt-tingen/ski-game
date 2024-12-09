@@ -7,6 +7,13 @@ html,
   height: 100lvh;
 }
 
+/* https://github.com/nostalgic-css/NES.css/issues/509#issuecomment-2394798028 */
+@media (-webkit-min-device-pixel-ratio: 0) and (min-resolution: 0.001dpcm) {
+  .nes-btn {
+    border-image-repeat: stretch;
+  }
+}
+
 #container {
   width: 100lvw;
   display: grid;
@@ -32,4 +39,32 @@ html,
   .turn-btn {
     display: none;
   }
+}
+
+.nes-btn img {
+  image-rendering: pixelated;
+  width: 32px;
+  height: 32px;
+}
+
+#game-btns {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  padding: 8px;
+
+  display: flex;
+  gap: 8px;
+}
+
+#mute.muted img:not([data-mute]) {
+  display: none;
+}
+#mute:not(.muted) img[data-mute] {
+  display: none;
+}
+
+.hidden {
+  display: none;
 }

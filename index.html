@@ -7,12 +7,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Spicy Slolam</title>
 
+    <link rel="stylesheet" href="./node_modules/nes.css/css/nes.min.css" />
     <link rel="stylesheet" href="./index.css" />
   </head>
   <body>
     <div id="container"><canvas id="game"></canvas></div>
+
     <button id="left" class="turn-btn"></button>
     <button id="right" class="turn-btn"></button>
+
+    <div id="game-btns" class="hidden">
+      <button id="home" class="nes-btn is-primary">
+        <img src="./src/images/home.png" />
+      </button>
+      <button id="reset" class="nes-btn is-primary">
+        <img src="./src/images/reset.png" />
+      </button>
+      <button id="mute" class="nes-btn is-primary">
+        <img data-mute src="./src/images/musicOff.png" />
+        <img src="./src/images/musicOn.png" />
+      </button>
+    </div>
+
     <script type="module" src="./src/main.ts"></script>
   </body>
 </html>

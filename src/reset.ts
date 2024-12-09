@@ -1,15 +1,4 @@
-import {
-  Color,
-  Engine,
-  GraphicsGroup,
-  Rectangle,
-  Scene,
-  SceneActivationContext,
-  Text,
-  vec,
-} from 'excalibur';
-import { Button } from './Button';
-import { font } from './font';
+import { Scene, SceneActivationContext } from 'excalibur';
 import { MyLevel } from './level';
 
 export class Reset extends Scene {
