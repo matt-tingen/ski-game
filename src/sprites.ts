@@ -21,6 +21,10 @@ export const sprites = {
   bankLeft: get(4, 0),
   pathDetail: get(5, 0),
 
+  treeTop: get(6, 0),
+  treeBottom: get(6, 1),
+  tree: get(6, 2),
+
   rock: get(9, 6),
   snowman: get(9, 5),
 

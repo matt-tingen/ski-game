@@ -120,7 +120,8 @@ export class MyLevel extends Scene {
 
   override onPostUpdate(engine: Engine, elapsedMs: number): void {
     if (
-      this.player.pos.y >= this.tilemap.pos.y + this.tilemap.height + 16 &&
+      (this.player.dead ||
+        this.player.pos.y >= this.tilemap.pos.y + this.tilemap.height + 16) &&
       !this.done
     ) {
       this.done = true;
