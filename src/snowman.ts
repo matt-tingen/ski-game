@@ -1,17 +1,7 @@
 import { sample } from 'es-toolkit';
-import {
-  Actor,
-  CollisionType,
-  Color,
-  EmitterType,
-  Particle,
-  ParticleEmitter,
-  vec,
-  Vector,
-} from 'excalibur';
+import { Actor, CollisionType, Color, Particle, vec, Vector } from 'excalibur';
 import { Resources } from './resources';
 import { sprites } from './sprites';
-import { zIndices } from './zIndices';
 
 export class Snowman extends Actor {
   constructor(pos: Vector) {
@@ -31,9 +21,9 @@ export class Snowman extends Actor {
 
   splat(velocity: Vector) {
     const particle = new Particle({
-      beginColor: Color.White,
-      endColor: Color.White,
-      startSize: 6,
+      beginColor: new Color(182, 201, 214),
+      endColor: new Color(182, 201, 214),
+      startSize: 10,
       endSize: 35,
       fade: true,
       life: 1500,
@@ -41,7 +31,6 @@ export class Snowman extends Actor {
     });
 
     sample(Resources.FootstepSnow).play();
-    // emitter.z = zIndices.obstacle;
     this.addChild(particle);
     this.collider.clear();
     this.graphics.hide();
