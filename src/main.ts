@@ -1,6 +1,7 @@
 import { Color, DisplayMode, Engine, FadeInOut } from 'excalibur';
 import { MyLevel } from './level';
 import { MainMenu } from './mainMenu';
+import { Reset } from './reset';
 import { loader } from './resources';
 
 const game = new Engine({
@@ -12,6 +13,7 @@ const game = new Engine({
   scenes: {
     game: MyLevel,
     menu: MainMenu,
+    reset: Reset,
   },
   suppressPlayButton: process.env.NODE_ENV === 'development',
 });

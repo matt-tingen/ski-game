@@ -4,6 +4,7 @@ import {
   DefaultLoader,
   Engine,
   ExcaliburGraphicsContext,
+  Keys,
   PolygonCollider,
   Scene,
   SceneActivationContext,
@@ -118,6 +119,10 @@ export class MyLevel extends Scene {
       // TODO: make same amount of level ahead of player visible regardless of screen size.
       this.player.pos.y + engine.halfDrawHeight * 0.8,
     );
+
+    if (engine.input.keyboard.wasPressed(Keys.R)) {
+      engine.goToScene('reset');
+    }
   }
 
   override onPreDraw(ctx: ExcaliburGraphicsContext, elapsedMs: number): void {
