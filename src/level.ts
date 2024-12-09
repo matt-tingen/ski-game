@@ -11,6 +11,7 @@ import {
   vec,
 } from 'excalibur';
 import seedRandom from 'seed-random';
+import { Grass } from './grass';
 import { LockToActorAxisOffsetCameraStrategy } from './LockToActorAxisOffsetCameraStrategy';
 import { Player } from './player';
 import { RaceTimer } from './RaceTimer';
@@ -24,7 +25,15 @@ import { zIndices } from './zIndices';
 export class MyLevel extends Scene {
   private player!: Player;
 
-  private easiness = 20;
+  /**
+   * Bunny = Infinity
+   * Green circle = ~8
+   * Blue square = 4
+   * Black diamond = 2
+   * 2x Black diamond = 1
+   * 3x Black diamond = ?
+   */
+  private easiness = 4;
   private tilemap!: TileMap;
 
   private done = false;
@@ -89,12 +98,18 @@ export class MyLevel extends Scene {
           rock.z = zIndices.obstacle;
 
           this.add(rock);
-        } else if (obstacleValue < 0.16) {
+        } else if (obstacleValue < 0.12) {
           const snowman = new Snowman(pos);
 
           snowman.z = zIndices.obstacle;
 
           this.add(snowman);
+        } else if (obstacleValue < 0.16) {
+          const grass = new Grass(pos);
+
+          grass.z = zIndices.obstacle;
+
+          this.add(grass);
         }
       }
     }

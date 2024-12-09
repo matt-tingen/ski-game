@@ -24,6 +24,7 @@ export const sprites = {
   treeTop: get(6, 0),
   treeBottom: get(6, 1),
   tree: get(6, 2),
+  grass: get(7, 2),
 
   rock: get(9, 6),
   snowman: get(9, 5),

@@ -17,6 +17,7 @@ import {
   Vector,
 } from 'excalibur';
 import { Config } from './Config';
+import { Grass } from './grass';
 import { Resources } from './resources';
 import { Rock } from './rock';
 import { SlolamSpeedup } from './SlolamSpeedup';
@@ -199,9 +200,13 @@ export class Player extends Actor {
       this.controlsEnabled = false;
       sample(Resources.ImpactMining).play();
     } else if (otherOwner instanceof Snowman) {
-      this.collisionCount++;
+      this.collisionCount += 2;
 
       otherOwner.splat(this.vel);
+    } else if (otherOwner instanceof Grass) {
+      this.collisionCount++;
+
+      // TODO: sound
     } else if (otherOwner instanceof SlolamSpeedup) {
       this.downhillSpeed *= 1.2;
       Resources.Powerup.play();
