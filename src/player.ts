@@ -1,4 +1,4 @@
-import { noop, sample } from 'es-toolkit';
+import { sample } from 'es-toolkit';
 import {
   Actor,
   Animation,
@@ -16,7 +16,6 @@ import {
   vec,
   Vector,
 } from 'excalibur';
-import { Button } from './Button';
 import { Config } from './Config';
 import { Resources } from './resources';
 import { Rock } from './rock';
@@ -41,9 +40,20 @@ export class Player extends Actor {
 
   private obstacleDisplacement = Vector.Zero.clone();
 
-  private leftTurnButton!: Button;
-  private rightTurnButton!: Button;
-  private isTouch = window.matchMedia('(pointer: coarse)').matches;
+  private leftTurnButton = document.getElementById('left') as HTMLButtonElement;
+  private rightTurnButton = document.getElementById(
+    'right',
+  ) as HTMLButtonElement;
+
+  private buttonHeldMap = new WeakSet<EventTarget>();
+
+  private onButtonDown = ({ target }: PointerEvent) => {
+    if (target) this.buttonHeldMap.add(target);
+  };
+
+  private onButtonUp = ({ target }: PointerEvent) => {
+    if (target) this.buttonHeldMap.delete(target);
+  };
 
   constructor(pos: Vector) {
     super({
@@ -62,6 +72,9 @@ export class Player extends Actor {
     this.addWakeEmitter(vec(-4, 0));
     this.addWakeEmitter(vec(4, 0));
 
+    this.setupButton(this.leftTurnButton);
+    this.setupButton(this.rightTurnButton);
+
     this.graphics.add(
       'push',
       new Animation({
@@ -79,20 +92,20 @@ export class Player extends Actor {
       }),
     );
     this.graphics.use('push');
+  }
 
-    this.addChild(
-      (this.leftTurnButton = new Button(noop, {
-        width: engine.halfDrawWidth,
-        height: engine.drawHeight,
-      })),
-    );
-    this.addChild(
-      (this.rightTurnButton = new Button(noop, {
-        width: engine.halfDrawWidth,
-        x: engine.halfDrawWidth,
-        height: engine.drawHeight,
-      })),
-    );
+  private setupButton(btn: HTMLButtonElement) {
+    btn.addEventListener('pointerdown', this.onButtonDown);
+    btn.addEventListener('pointerup', this.onButtonUp);
+    btn.addEventListener('pointercancel', this.onButtonUp);
+  }
+
+  onPostKill(): void {
+    [this.leftTurnButton, this.rightTurnButton].forEach((btn) => {
+      btn.removeEventListener('pointerdown', this.onButtonDown);
+      btn.removeEventListener('pointerup', this.onButtonUp);
+      btn.removeEventListener('pointercancel', this.onButtonUp);
+    });
   }
 
   private addWakeEmitter(pos: Vector) {
@@ -125,14 +138,14 @@ export class Player extends Actor {
       this.controlsEnabled &&
       (engine.input.keyboard.isHeld(Keys.A) ||
         engine.input.keyboard.isHeld(Keys.Left) ||
-        (this.isTouch && this.leftTurnButton.isDown))
+        this.buttonHeldMap.has(this.leftTurnButton))
     ) {
       this.lateralSpeed += delta(Config.playerTurnSpeed);
     } else if (
       this.controlsEnabled &&
       (engine.input.keyboard.isHeld(Keys.D) ||
         engine.input.keyboard.isHeld(Keys.Right) ||
-        (this.isTouch && this.rightTurnButton.isDown))
+        this.buttonHeldMap.has(this.rightTurnButton))
     ) {
       this.lateralSpeed -= delta(Config.playerTurnSpeed);
     } else {
@@ -172,11 +185,6 @@ export class Player extends Actor {
         ? 'push'
         : 'up',
     );
-  }
-
-  override onPostUpdate(engine: Engine, elapsedMs: number): void {
-    this.obstacleDisplacement = Vector.Zero.clone();
-    this.collisionCount = 0;
   }
 
   override onCollisionStart(

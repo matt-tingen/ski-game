@@ -3,10 +3,33 @@ html,
 :root {
   margin: 0;
   background: #2185d0;
+  touch-action: none;
+  height: 100lvh;
 }
 
 #container {
   width: 100lvw;
   display: grid;
   place-items: center;
+}
+
+.turn-btn {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  border: none;
+  padding: 0;
+}
+
+#left {
+  right: 50%;
+}
+#right {
+  left: 50%;
+}
+
+@media not (pointer: coarse) {
+  .turn-btn {
+    display: none;
+  }
 }
