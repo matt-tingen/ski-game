@@ -38,7 +38,8 @@ export class Player extends Actor {
   private lateralSpeed = 0;
   private collisionCount = 0;
 
-  private obstacleDisplacement = Vector.Zero.clone();
+  private leftWake!: ParticleEmitter;
+  private rightWake!: ParticleEmitter;
 
   private leftTurnButton = document.getElementById('left') as HTMLButtonElement;
   private rightTurnButton = document.getElementById(
@@ -69,8 +70,8 @@ export class Player extends Actor {
     this.graphics.add('up', sprites[`skier${this.skierColor}Up`]);
     this.graphics.add('down', sprites[`skier${this.skierColor}Down`]);
 
-    this.addWakeEmitter(vec(-4, 0));
-    this.addWakeEmitter(vec(4, 0));
+    this.addChild((this.leftWake = Player.buildWakeEmitter(vec(-4, 0))));
+    this.addChild((this.rightWake = Player.buildWakeEmitter(vec(4, 0))));
 
     this.setupButton(this.leftTurnButton);
     this.setupButton(this.rightTurnButton);
@@ -109,8 +110,8 @@ export class Player extends Actor {
     });
   }
 
-  private addWakeEmitter(pos: Vector) {
-    const emitter = new ParticleEmitter({
+  private static buildWakeEmitter(pos: Vector) {
+    return new ParticleEmitter({
       pos,
       emitRate: 200,
       particle: {
@@ -120,8 +121,6 @@ export class Player extends Actor {
         life: Infinity,
       },
     });
-
-    this.addChild(emitter);
   }
 
   override update(engine: Engine, elapsedMs: number): void {
