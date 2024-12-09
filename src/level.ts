@@ -15,6 +15,7 @@ import { LockToActorAxisOffsetCameraStrategy } from './LockToActorAxisOffsetCame
 import { Player } from './player';
 import { RaceTimer } from './RaceTimer';
 import { Rock } from './rock';
+import { getSeed } from './seed';
 import { SlolamFlag } from './SlolamFlag';
 import { Snowman } from './snowman';
 import { createMap } from './tilemap';
@@ -30,7 +31,7 @@ export class MyLevel extends Scene {
   private timer = new RaceTimer({ x: 100, y: 100 });
 
   override onInitialize(engine: Engine): void {
-    const seed = new Date().toISOString().split('T')[0];
+    const seed = getSeed();
 
     this.tilemap = createMap(seedRandom(seed));
     this.initObstacles(seed);
