@@ -8,10 +8,8 @@ import {
   CollisionContact,
   CollisionGroupManager,
   CollisionType,
-  Color,
   Engine,
   Keys,
-  ParticleEmitter,
   Side,
   vec,
   Vector,
@@ -20,6 +18,7 @@ import { Config } from './Config';
 import { Grass } from './grass';
 import { Resources } from './resources';
 import { Rock } from './rock';
+import { Ski } from './ski';
 import { SlolamSpeedup } from './SlolamSpeedup';
 import { Snowman } from './snowman';
 import { sprites } from './sprites';
@@ -34,13 +33,11 @@ export class Player extends Actor {
   public dead = false;
 
   private skierColor: SkierColor = 'Pink';
+  public readonly skis = [new Ski(vec(-4, 0)), new Ski(vec(4, 0))];
 
   private downhillSpeed = Config.playerInitialDownhillSpeed;
   private lateralSpeed = 0;
   private collisionCount = 0;
-
-  private leftWake!: ParticleEmitter;
-  private rightWake!: ParticleEmitter;
 
   private leftTurnButton = document.getElementById('left') as HTMLButtonElement;
   private rightTurnButton = document.getElementById(
@@ -71,8 +68,9 @@ export class Player extends Actor {
     this.graphics.add('up', sprites[`skier${this.skierColor}Up`]);
     this.graphics.add('down', sprites[`skier${this.skierColor}Down`]);
 
-    this.addChild((this.leftWake = Player.buildWakeEmitter(vec(-4, 0))));
-    this.addChild((this.rightWake = Player.buildWakeEmitter(vec(4, 0))));
+    this.skis.forEach((ski) => {
+      this.addChild(ski);
+    });
 
     this.setupButton(this.leftTurnButton);
     this.setupButton(this.rightTurnButton);
@@ -108,19 +106,6 @@ export class Player extends Actor {
       btn.removeEventListener('pointerdown', this.onButtonDown);
       btn.removeEventListener('pointerup', this.onButtonUp);
       btn.removeEventListener('pointercancel', this.onButtonUp);
-    });
-  }
-
-  private static buildWakeEmitter(pos: Vector) {
-    return new ParticleEmitter({
-      pos,
-      emitRate: 200,
-      particle: {
-        startSize: 2,
-        endSize: 2,
-        beginColor: new Color(182, 201, 214),
-        life: Infinity,
-      },
     });
   }
 

@@ -1,7 +1,8 @@
-import { randomInt, sample, sortBy, without } from 'es-toolkit';
+import { sample, sortBy, without } from 'es-toolkit';
 import {
   Axis,
   BoundingBox,
+  Color,
   Engine,
   Keys,
   Scene,
@@ -18,6 +19,7 @@ import { addRoom, ROOM_HEIGHT, roomNames } from './rooms';
 import { getSeed } from './seed';
 import { SlolamGate } from './SlolamGate';
 import { Spawn } from './spawn';
+import { Trail } from './trail';
 import { zIndices } from './zIndices';
 
 export class MyLevel extends Scene {
@@ -40,6 +42,7 @@ export class MyLevel extends Scene {
     this.player.z = zIndices.player;
 
     this.add(this.player);
+    this.addTrails();
     this.add(this.timer);
     this.camera.x = this.player.pos.x;
 
@@ -54,6 +57,23 @@ export class MyLevel extends Scene {
         bottom: this.mapBottom,
       }),
     );
+  }
+
+  private addTrails() {
+    this.player.skis.forEach((target) => {
+      this.add(
+        new Trail({
+          target,
+          offset: vec(0, 0),
+          smoothness: 0.1,
+          thickness: 2,
+          color: new Color(182, 201, 214),
+          z: zIndices.trail,
+          anchor: vec(0, 0),
+          visible: true,
+        }),
+      );
+    });
   }
 
   private get mapBottom() {
