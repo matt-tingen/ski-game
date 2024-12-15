@@ -5,7 +5,6 @@ import {
   FadeInOut,
   ImageFiltering,
 } from 'excalibur';
-import { ControlledSound } from './ControlledSound';
 import { MyLevel } from './level';
 import { MainMenu } from './mainMenu';
 import { Reset } from './reset';
@@ -42,6 +41,7 @@ game
     }),
   })
   .then(() => {
+    Resources.SpaceSong.instanceVolume = 0.7;
     Resources.SpaceSong.play();
   });
 
