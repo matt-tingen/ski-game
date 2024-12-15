@@ -54,4 +54,15 @@ export const Resources = {
   FlagHit: new ControlledSound(flagHitPath),
 } as const;
 
-export const loader = new Loader(Object.values(Resources).flat());
+class CustomLoader extends Loader {
+  protected override _playButtonStyles = '';
+  protected override get _playButton() {
+    const btn = super._playButton;
+
+    btn.classList.add('nes-btn', 'is-success');
+
+    return btn;
+  }
+}
+
+export const loader = new CustomLoader(Object.values(Resources).flat());
