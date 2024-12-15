@@ -12,7 +12,7 @@ import { loader, Resources } from './resources';
 import { initVolume } from './volume';
 
 const game = new Engine({
-  width: 600,
+  width: 500,
   height: 800,
   canvasElementId: 'game',
   displayMode: DisplayMode.FitScreen,

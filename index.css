@@ -86,7 +86,6 @@ html,
 }
 #volume-container label {
   grid-area: label;
-  color: white;
   margin: 0;
   margin-top: 8px;
 }
@@ -109,19 +108,16 @@ html,
   display: none;
 }
 
+.outline-text {
+  color: white;
+  -webkit-text-stroke: 0.2em black;
+  paint-order: stroke fill;
+}
+
 #timer {
   display: flex;
   align-items: center;
-  color: white;
-  /* text-shadow:
-    -1px -1px 0 #000,
-    1px -1px 0 #000,
-    -1px 1px 0 #000,
-    1px 1px 0 #000; */
-  -webkit-text-stroke: 0.2em black;
-  paint-order: stroke fill;
   font-size: 2em;
-  /* background: white; */
 }
 
 .hidden {
