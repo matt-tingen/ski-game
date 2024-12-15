@@ -1,6 +1,7 @@
 import { Actor, vec, Vector } from 'excalibur';
 import { SlolamFlag } from './SlolamFlag';
 import { SlolamTrigger } from './SlolamTrigger';
+import { zIndices } from './zIndices';
 
 export class SlolamGate extends Actor {
   private leftFlag!: SlolamFlag;
@@ -14,6 +15,7 @@ export class SlolamGate extends Actor {
     super({
       name: 'SlolamGate',
       pos,
+      z: zIndices.pickup,
     });
   }
 

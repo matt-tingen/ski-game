@@ -16,7 +16,7 @@ export class SlolamFlag extends Actor {
       width: 4,
       height: 4,
       anchor: vec(0.5, 1),
-      // offset: vec(direction === 'left' ? -2 : 2, -5),
+      offset: vec(direction === 'right' ? -6 : 6, 0),
       collisionType: CollisionType.Fixed,
     });
   }

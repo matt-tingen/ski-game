@@ -1,4 +1,4 @@
-import { sample, sortBy, without } from 'es-toolkit';
+import { groupBy, sample, without } from 'es-toolkit';
 import {
   Axis,
   BoundingBox,
@@ -15,7 +15,7 @@ import { LockToActorAxisOffsetCameraStrategy } from './LockToActorAxisOffsetCame
 import { Player } from './player';
 import { RaceTimer } from './RaceTimer';
 import { withSeededRandom } from './random';
-import { addRoom, ROOM_HEIGHT, roomNames } from './rooms';
+import { addRoom, ROOM_HEIGHT, roomNames, TILE_SIZE } from './rooms';
 import { getSeed } from './seed';
 import { SlolamGate } from './SlolamGate';
 import { Spawn } from './spawn';
@@ -25,7 +25,7 @@ import { zIndices } from './zIndices';
 export class MyLevel extends Scene {
   private player!: Player;
 
-  private roomCount = 15;
+  private roomCount = 16;
 
   private done = false;
   private timer = new RaceTimer({ x: 100, y: 100 });
@@ -100,55 +100,43 @@ export class MyLevel extends Scene {
           : [withSeededRandom(roomRandom, () => sample(eligibleRooms))];
 
       addRoom(this, detailRandom, i++, ...rooms);
+    }
 
-      const flagSpawns = this.actors.filter((a) => a instanceof FlagSpawn);
-      const spawn = withSeededRandom(slolamRandom, () => sample(flagSpawns));
+    addRoom(this, detailRandom, i++, 'finish');
 
-      if (spawn) {
-        const row = sortBy(
-          flagSpawns.filter((fs) => fs.pos.y === spawn.pos.y),
-          [(fs) => fs.pos.x],
-        );
+    this.addGates(slolamRandom);
+  }
 
-        const spawnIndex = row.indexOf(spawn);
+  private addGates(slolamRandom: () => number) {
+    const flagSpawns = this.actors.filter((a) => a instanceof FlagSpawn);
+    const rows = Object.values(groupBy(flagSpawns, (a) => a.pos.y));
 
-        // Remove non-contiguous to the right
-        for (let i = spawnIndex + 1; i < row.length; i++) {
-          if (row[i].pos.x !== row[i - 1].pos.x + 1) {
-            row.splice(i, row.length - i);
-            break;
-          }
-        }
+    rows.forEach((row) => {
+      if (slolamRandom() > 0.35) return;
 
-        // Remove non-contiguous to the left
-        for (let i = spawnIndex - 1; i >= 0; i--) {
-          if (row[i].pos.x !== row[i + 1].pos.x - 1) {
-            row.splice(0, i);
-            break;
-          }
-        }
+      const spawnA = withSeededRandom(slolamRandom, () => sample(row));
 
+      if (spawnA) {
         // Remove first spawn and adjacent
-        const others = row.filter(
-          (fs) => fs !== spawn && Math.abs(fs.pos.x - spawn.pos.x) > 1,
+        const eligible = row.filter(
+          (fs) =>
+            fs !== spawnA && Math.abs(fs.pos.x - spawnA.pos.x) > TILE_SIZE,
         );
 
-        if (others.length) {
-          const other = withSeededRandom(slolamRandom, () => sample(others));
+        if (eligible.length) {
+          const spawnB = withSeededRandom(slolamRandom, () => sample(eligible));
 
-          const center = vec((spawn.pos.x + other.pos.x) / 2, spawn.pos.y);
-          const width = Math.abs(spawn.pos.x - other.pos.x);
+          const center = vec((spawnA.pos.x + spawnB.pos.x) / 2, spawnA.pos.y);
+          const width = Math.abs(spawnA.pos.x - spawnB.pos.x);
 
           this.add(new SlolamGate(center, width));
         }
       }
+    });
 
-      flagSpawns.forEach((a) => {
-        this.remove(a);
-      });
-    }
-
-    addRoom(this, detailRandom, i++, 'finish');
+    flagSpawns.forEach((spawn) => {
+      this.remove(spawn);
+    });
   }
 
   override onActivate(context: SceneActivationContext<unknown>): void {

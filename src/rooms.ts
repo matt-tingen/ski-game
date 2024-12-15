@@ -26,6 +26,7 @@ const entityMap = [
 const { mapHeight: roomHeight, mapWidth: roomWidth, tileSize } = map;
 
 const tileCenter = vec(tileSize / 2, tileSize / 2);
+export const TILE_SIZE = tileSize;
 export const ROOM_WIDTH = roomWidth * tileSize;
 export const ROOM_HEIGHT = roomHeight * tileSize;
 

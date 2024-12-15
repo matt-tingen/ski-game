@@ -25,7 +25,10 @@ const game = new Engine({
     menu: MainMenu,
     reset: Reset,
   },
-  suppressPlayButton: process.env.NODE_ENV === 'development',
+  configurePerformanceCanvas2DFallback: {
+    allow: true,
+    showPlayerMessage: true,
+  },
 });
 
 game
@@ -39,7 +42,7 @@ game
   })
   .then(() => {
     // game.debug.collider.showAll = true;
-    game.showDebug(true);
+    // game.showDebug(true);
     // Do something after the game starts
   });
 
