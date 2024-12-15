@@ -25,6 +25,7 @@ const entityMap = [
 
 const { mapHeight: roomHeight, mapWidth: roomWidth, tileSize } = map;
 
+const tileCenter = vec(tileSize / 2, tileSize / 2);
 export const ROOM_WIDTH = roomWidth * tileSize;
 export const ROOM_HEIGHT = roomHeight * tileSize;
 
@@ -43,7 +44,7 @@ const addLayer = (scene: Scene, tilemap: TileMap, layer: Layer) => {
       tile.addGraphic(entity);
     } else {
       // eslint-disable-next-line new-cap
-      scene.add(new entity(tile.pos));
+      scene.add(new entity(tile.pos.add(tileCenter)));
     }
   });
 };
