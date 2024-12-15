@@ -4,9 +4,9 @@ import { SoundChannel } from './SoundChannel';
 const initMuteButton = (id: string, channel: SoundChannel) => {
   const btn = document.getElementById(id) as HTMLButtonElement;
 
-  btn.classList.toggle('muted', channel.muted);
+  btn.classList.toggle('is-primary', !channel.muted);
   btn.addEventListener('click', () => {
-    btn.classList.toggle('muted');
+    btn.classList.toggle('is-primary');
     // eslint-disable-next-line no-param-reassign
     channel.muted = !channel.muted;
   });

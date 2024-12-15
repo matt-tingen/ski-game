@@ -70,8 +70,12 @@ html,
 
   display: grid;
   grid-template-areas:
-    'music  sfx'
-    'volume volume';
+    'music'
+    'sfx'
+    'label'
+    'volume';
+  grid-template-columns: 120px;
+  overflow: visible;
   gap: 8px;
 }
 #music {
@@ -80,22 +84,24 @@ html,
 #sfx {
   grid-area: sfx;
 }
+#volume-container label {
+  grid-area: label;
+  color: white;
+  margin: 0;
+  margin-top: 8px;
+}
 #volume-input,
-#volume {
+#volume-progress {
   grid-area: volume;
-  height: 60px;
+  height: 40px;
+  width: 200px;
+  transform-origin: top right;
+  transform: rotate(-0.25turn) translateY(-200px);
 }
 
 #volume-input {
   appearance: none;
   opacity: 0;
-}
-#volume {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  color: white;
-  user-select: none;
 }
 
 #volume-container button:not(.muted) img[data-off],

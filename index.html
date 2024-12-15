@@ -17,29 +17,19 @@
     <button id="right" class="turn-btn"></button>
 
     <div id="volume-container">
-      <button id="music" data-volume="high" class="nes-btn">
-        <img data-off src="./src/images/volumeX.png" />
-        <img data-on src="./src/images/volumeHigh.png" />
-        Music
-      </button>
-      <button id="sfx" data-volume="high" class="nes-btn">
-        <img data-off src="./src/images/volumeX.png" />
-        <img data-on src="./src/images/volumeHigh.png" />
-        SFX
-      </button>
-      <div id="volume">
-        Volume
-        <progress
-          id="volume-progress"
-          class="nes-progress is-primary"
-          type="range"
-          value=".5"
-          max="1"
-        ></progress>
-      </div>
+      <button id="music" data-volume="high" class="nes-btn">Music</button>
+      <button id="sfx" data-volume="high" class="nes-btn">SFX</button>
+      <label for="volume-input">Volume</label>
+      <progress
+        id="volume-progress"
+        class="nes-progress is-primary"
+        type="range"
+        value=".5"
+        max="1"
+      ></progress>
       <input
         id="volume-input"
-        class="nes-pointer"
+        class="nes-pointer nes-progress"
         type="range"
         min="0"
         max="1"
