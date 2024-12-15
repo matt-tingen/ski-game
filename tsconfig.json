@@ -6,6 +6,7 @@
     "module": "commonjs",
     "isolatedModules": true,
     "esModuleInterop": true,
+    "resolveJsonModule": true,
     "forceConsistentCasingInFileNames": true,
     "allowSyntheticDefaultImports": true,
     "target": "esnext",

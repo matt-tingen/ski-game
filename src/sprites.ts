@@ -38,4 +38,13 @@ export const sprites = {
   skierGreenUp: get(11, 5),
   skierPinkDown: get(10, 6),
   skierPinkUp: get(11, 6),
+
+  liftPoleBase: get(6, 5),
+  liftPoleShaft: get(6, 4),
+  liftPoleTop: get(6, 3),
+  liftLine: get(10, 3),
+  liftLineChair: get(9, 3),
+  liftChair: get(9, 4),
+  liftChairShadow: get(0, 4),
+  liftLineShadow: get(5, 4),
 };
