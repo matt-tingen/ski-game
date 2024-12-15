@@ -1,13 +1,16 @@
-import { Engine, ScreenElement, Text } from 'excalibur';
-import { font } from './font';
+import { Actor, Engine, Text } from 'excalibur';
 
-export class RaceTimer extends ScreenElement {
+export class RaceTimer extends Actor {
   #ms = 0;
   private start: Date | undefined;
   private running = false;
 
   private text!: Text;
   private formatter!: Intl.NumberFormat;
+
+  constructor(private element: HTMLElement) {
+    super();
+  }
 
   public get ms() {
     return this.#ms;
@@ -21,7 +24,7 @@ export class RaceTimer extends ScreenElement {
   }
 
   private updateText() {
-    this.text.text = this.formatter.format(this.ms / 1000);
+    this.element.textContent = `${this.formatter.format(this.ms / 1000)}s`;
   }
 
   public pause() {
@@ -35,13 +38,10 @@ export class RaceTimer extends ScreenElement {
   }
 
   override onInitialize(engine: Engine): void {
-    this.text = new Text({ text: '', font });
     this.formatter = new Intl.NumberFormat(undefined, {
       minimumFractionDigits: 2,
       maximumFractionDigits: 2,
     });
-
-    this.graphics.add(this.text);
 
     this.updateText();
   }

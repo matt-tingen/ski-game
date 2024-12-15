@@ -28,7 +28,7 @@ export class MyLevel extends Scene {
   private roomCount = 16;
 
   private done = false;
-  private timer = new RaceTimer({ x: 100, y: 100 });
+  private timer = new RaceTimer(document.getElementById('timer')!);
 
   override onInitialize(engine: Engine): void {
     const seed = getSeed();

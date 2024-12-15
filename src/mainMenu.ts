@@ -1,14 +1,5 @@
-import {
-  Color,
-  Engine,
-  GraphicsGroup,
-  Rectangle,
-  Scene,
-  Text,
-  vec,
-} from 'excalibur';
+import { Color, Engine, GraphicsGroup, Rectangle, Scene, vec } from 'excalibur';
 import { Button } from './Button';
-import { font } from './font';
 
 export class MainMenu extends Scene {
   override onInitialize(engine: Engine): void {
@@ -26,14 +17,9 @@ export class MainMenu extends Scene {
       height: 25,
       color: Color.Green,
     });
-    const label = new Text({
-      text: 'play',
-      color: Color.Black,
-      font,
-    });
 
     const group = new GraphicsGroup({
-      members: [rect, label],
+      members: [rect],
     });
 
     playButton.graphics.add(group);
