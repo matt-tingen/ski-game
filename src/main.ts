@@ -9,7 +9,7 @@ import { ControlledSound } from './ControlledSound';
 import { MyLevel } from './level';
 import { MainMenu } from './mainMenu';
 import { Reset } from './reset';
-import { loader } from './resources';
+import { loader, Resources } from './resources';
 
 const game = new Engine({
   width: 600,
@@ -41,9 +41,7 @@ game
     }),
   })
   .then(() => {
-    // game.debug.collider.showAll = true;
-    // game.showDebug(true);
-    // Do something after the game starts
+    Resources.SpaceSong.play();
   });
 
 const muteBtn = document.getElementById('mute')!;

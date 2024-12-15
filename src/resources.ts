@@ -1,4 +1,5 @@
-import { ImageSource, Loader } from 'excalibur';
+import { ImageSource, Loader, Sound } from 'excalibur';
+import spaceSongPath from './audio/8-bit-space-123218.mp3';
 import flagHitPath from './audio/flaghit.wav';
 import footstepCarpet0Path from './audio/footstep_carpet_000.ogg';
 import footstepCarpet1Path from './audio/footstep_carpet_001.ogg';
@@ -49,6 +50,7 @@ export const Resources = {
     new ControlledSound(impactMining4Path),
   ],
 
+  SpaceSong: new Sound(spaceSongPath),
   Powerup: new ControlledSound(powerupPath),
   // W=8000,f=851.528,v=46.528,V=558.333,t=127.083,T=0.172,_=0.043,d=249.113,D=0.106,p=1.342,a=0.6,A=1.9,b=0.3,r=2.6,s=4,S=9.317,z=Down,g=0.705,l=0.35
   FlagHit: new ControlledSound(flagHitPath),
