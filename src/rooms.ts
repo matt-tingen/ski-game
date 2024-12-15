@@ -1,5 +1,6 @@
 import { keyBy } from 'es-toolkit';
 import { Scene, Sprite, TileMap, vec } from 'excalibur';
+import { FlagSpawn } from './flagSpawn';
 import map from './map.json';
 import { Resources } from './resources';
 import { Rock } from './rock';
@@ -19,6 +20,7 @@ const entityMap = [
   sprites.liftPoleBase,
   sprites.liftLineShadow,
   sprites.liftChairShadow,
+  FlagSpawn,
 ];
 
 const { mapHeight: roomHeight, mapWidth: roomWidth, tileSize } = map;
