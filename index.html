@@ -16,16 +16,40 @@
     <button id="left" class="turn-btn"></button>
     <button id="right" class="turn-btn"></button>
 
-    <div id="game-btns" class="hidden">
-      <button id="home" class="nes-btn is-primary">
-        <img src="./src/images/home.png" />
+    <div id="volume-container">
+      <button id="music" data-volume="high" class="nes-btn">
+        <img data-off src="./src/images/volumeX.png" />
+        <img data-on src="./src/images/volumeHigh.png" />
+        Music
       </button>
+      <button id="sfx" data-volume="high" class="nes-btn">
+        <img data-off src="./src/images/volumeX.png" />
+        <img data-on src="./src/images/volumeHigh.png" />
+        SFX
+      </button>
+      <div id="volume">
+        Volume
+        <progress
+          id="volume-progress"
+          class="nes-progress is-primary"
+          type="range"
+          value=".5"
+          max="1"
+        ></progress>
+      </div>
+      <input
+        id="volume-input"
+        class="nes-pointer"
+        type="range"
+        min="0"
+        max="1"
+        step="0.1"
+      />
+    </div>
+
+    <div id="game-btns">
       <button id="reset" class="nes-btn is-primary">
         <img src="./src/images/reset.png" />
-      </button>
-      <button id="mute" class="nes-btn is-primary">
-        <img data-mute src="./src/images/musicOff.png" />
-        <img src="./src/images/musicOn.png" />
       </button>
     </div>
 

@@ -1,54 +1,29 @@
-import { clamp, Sound } from 'excalibur';
-
-const volumeStorageKey = 'global-volume';
-const mutedStorageKey = 'muted';
-const defaultGlobalVolume = 1;
-
-const getVolumeFromStorage = () => {
-  const storageValue = localStorage.getItem(volumeStorageKey);
-
-  if (storageValue === null) return storageValue;
-
-  const parsed = Number(storageValue);
-
-  return Number.isNaN(parsed) ? null : clamp(parsed, 0, 1);
-};
+import { Sound } from 'excalibur';
+import type { SoundChannel } from './SoundChannel';
 
 export class ControlledSound extends Sound {
-  static #globalVolume = getVolumeFromStorage() ?? defaultGlobalVolume;
-
-  static get globalVolume() {
-    return ControlledSound.#globalVolume;
+  constructor(
+    private channel: SoundChannel,
+    ...paths: string[]
+  ) {
+    super(...paths);
+    channel.add(this);
   }
 
-  static set globalVolume(value: number) {
-    this.#globalVolume = clamp(value, 0, 1);
-    localStorage.setItem(volumeStorageKey, this.#globalVolume.toString());
+  #instanceVolume = 1;
+
+  public get instanceVolume() {
+    return this.#instanceVolume;
   }
 
-  static #muted = Boolean(localStorage.getItem(mutedStorageKey));
-
-  static get muted() {
-    return this.#muted;
+  public set instanceVolume(value: number) {
+    this.#instanceVolume = value;
+    this.update();
   }
 
-  static set muted(isMuted: boolean) {
-    this.#muted = isMuted;
-
-    if (isMuted) {
-      localStorage.setItem(mutedStorageKey, 'true');
-    } else {
-      localStorage.removeItem(mutedStorageKey);
-    }
-  }
-
-  get volume() {
-    return ControlledSound.muted
+  public update() {
+    super.volume = this.channel.muted
       ? 0
-      : super.volume * ControlledSound.globalVolume;
-  }
-
-  set volume(value: number) {
-    super.volume = value;
+      : this.instanceVolume * this.channel.volume;
   }
 }

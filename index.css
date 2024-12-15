@@ -56,18 +56,50 @@ html,
 #game-btns {
   position: absolute;
   top: 0;
-  left: 0;
   right: 0;
   padding: 8px;
 
   display: flex;
   gap: 8px;
 }
+#volume-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 8px;
 
-#mute.muted img:not([data-mute]) {
-  display: none;
+  display: grid;
+  grid-template-areas:
+    'music  sfx'
+    'volume volume';
+  gap: 8px;
 }
-#mute:not(.muted) img[data-mute] {
+#music {
+  grid-area: music;
+}
+#sfx {
+  grid-area: sfx;
+}
+#volume-input,
+#volume {
+  grid-area: volume;
+  height: 60px;
+}
+
+#volume-input {
+  appearance: none;
+  opacity: 0;
+}
+#volume {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  color: white;
+  user-select: none;
+}
+
+#volume-container button:not(.muted) img[data-off],
+#volume-container button.muted img[data-on] {
   display: none;
 }
 

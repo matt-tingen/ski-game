@@ -10,6 +10,7 @@ import { MyLevel } from './level';
 import { MainMenu } from './mainMenu';
 import { Reset } from './reset';
 import { loader, Resources } from './resources';
+import { initVolume } from './volume';
 
 const game = new Engine({
   width: 600,
@@ -44,11 +45,4 @@ game
     Resources.SpaceSong.play();
   });
 
-const muteBtn = document.getElementById('mute')!;
-
-muteBtn.classList.toggle('muted', ControlledSound.muted);
-
-muteBtn.addEventListener('click', () => {
-  ControlledSound.muted = !ControlledSound.muted;
-  muteBtn.classList.toggle('muted', ControlledSound.muted);
-});
+initVolume();

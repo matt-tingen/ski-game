@@ -1,4 +1,4 @@
-import { Actor, Engine, ScreenElement, Text } from 'excalibur';
+import { Engine, ScreenElement, Text } from 'excalibur';
 import { font } from './font';
 
 export class RaceTimer extends ScreenElement {
