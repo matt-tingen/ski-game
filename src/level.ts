@@ -18,6 +18,7 @@ import { RaceTimer } from './RaceTimer';
 import { Rock } from './rock';
 import { getSeed } from './seed';
 import { SlolamFlag } from './SlolamFlag';
+import { SlolamGate } from './SlolamGate';
 import { Snowman } from './snowman';
 import { createMap } from './tilemap';
 import { zIndices } from './zIndices';
@@ -83,15 +84,15 @@ export class MyLevel extends Scene {
           Math.floor(jiggleRandom() * 16),
           Math.floor(jiggleRandom() * 16),
         );
-        const direction = slolamDirectionRandom() > 0.5 ? 'right' : 'left';
+
         const pos = tile.pos.add(jiggle);
 
         if (slolamValue < 0.02) {
-          const flag = new SlolamFlag(direction, pos);
+          const gate = new SlolamGate(pos, 40);
 
-          flag.z = zIndices.pickup;
+          gate.z = zIndices.pickup;
 
-          this.add(flag);
+          this.add(gate);
         } else if (obstacleValue < 0.08) {
           const rock = new Rock(pos);
 

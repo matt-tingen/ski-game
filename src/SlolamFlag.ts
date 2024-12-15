@@ -1,12 +1,4 @@
-import {
-  Actor,
-  Collider,
-  CollisionContact,
-  CollisionType,
-  Side,
-  vec,
-  Vector,
-} from 'excalibur';
+import { Actor, CollisionType, vec, Vector } from 'excalibur';
 import { Resources } from './resources';
 import { SlolamTrigger } from './SlolamTrigger';
 import { sprites } from './sprites';
@@ -23,49 +15,39 @@ export class SlolamFlag extends Actor {
       pos,
       width: 4,
       height: 4,
-      offset: vec(direction === 'left' ? -2 : 2, -5),
+      anchor: vec(0.5, 1),
+      // offset: vec(direction === 'left' ? -2 : 2, -5),
       collisionType: CollisionType.Fixed,
     });
   }
 
   override onInitialize() {
     this.graphics.add(
-      this.direction === 'left' ? sprites.flagRedSmall : sprites.flagBlueSmall,
+      this.direction === 'right' ? sprites.flagRedSmall : sprites.flagBlueSmall,
     );
-
-    this.trigger = new SlolamTrigger(
-      vec(this.direction === 'left' ? -6 : 6, 4),
-    );
-    this.addChild(this.trigger);
   }
 
-  onCollisionStart(
-    self: Collider,
-    other: Collider,
-    side: Side,
-    contact: CollisionContact,
-  ): void {
-    this.trigger.kill();
+  onCollisionStart(): void {
     const rads = 0.2;
     const t = 50;
 
     Resources.FlagHit.play();
 
     this.actions.rotateTo({
-      angleRadians: rads,
-      durationMs: t,
+      angle: rads,
+      duration: t,
     });
     this.actions.rotateTo({
-      angleRadians: -rads,
-      durationMs: 2 * t,
+      angle: -rads,
+      duration: 2 * t,
     });
     this.actions.rotateTo({
-      angleRadians: rads,
-      durationMs: 2 * t,
+      angle: rads,
+      duration: 2 * t,
     });
     this.actions.rotateTo({
-      angleRadians: 0,
-      durationMs: t,
+      angle: 0,
+      duration: t,
     });
   }
 }

@@ -1,14 +1,13 @@
-import { Actor, CollisionType, vec, Vector } from 'excalibur';
+import { Actor, CollisionType, vec } from 'excalibur';
 import { SlolamSpeedup } from './SlolamSpeedup';
 
 export class SlolamTrigger extends Actor {
-  constructor(pos: Vector) {
+  constructor(width: number) {
     super({
       name: 'SlolamTrigger',
-      pos,
-      width: 14,
+      width,
       height: 2,
-      // offset: vec
+      anchor: vec(0.5, 0),
       collisionType: CollisionType.Fixed,
     });
   }
