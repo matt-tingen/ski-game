@@ -2,6 +2,7 @@ import { groupBy, sample, without } from 'es-toolkit';
 import {
   Axis,
   BoundingBox,
+  clamp,
   Color,
   Engine,
   Keys,
@@ -15,7 +16,13 @@ import { LockToActorAxisOffsetCameraStrategy } from './LockToActorAxisOffsetCame
 import { Player } from './player';
 import { RaceTimer } from './RaceTimer';
 import { withSeededRandom } from './random';
-import { addRoom, ROOM_HEIGHT, roomNames, TILE_SIZE } from './rooms';
+import {
+  addRoom,
+  ROOM_HEIGHT,
+  ROOM_WIDTH,
+  roomNames,
+  TILE_SIZE,
+} from './rooms';
 import { getSeed } from './seed';
 import { SlolamGate } from './SlolamGate';
 import { Spawn } from './spawn';
@@ -168,6 +175,12 @@ export class MyLevel extends Scene {
       this.player.controlsEnabled = false;
       this.player.dead = true;
       this.camera.zoomOverTime(engine.drawHeight / this.mapBottom, 2000);
+    }
+
+    const clampedX = clamp(this.player.pos.x, 8, ROOM_WIDTH - 8);
+
+    if (this.player.pos.x !== clampedX) {
+      this.player.pos = vec(clampedX, this.player.pos.y);
     }
 
     if (engine.input.keyboard.wasPressed(Keys.R)) {
