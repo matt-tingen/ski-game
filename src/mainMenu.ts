@@ -1,29 +1,20 @@
-import { Color, Engine, GraphicsGroup, Rectangle, Scene, vec } from 'excalibur';
-import { Button } from './Button';
+import { Engine, Scene } from 'excalibur';
 
 export class MainMenu extends Scene {
+  // eslint-disable-next-line class-methods-use-this
   override onInitialize(engine: Engine): void {
-    const playButton = new Button(
-      () => {
-        engine.goToScene('game');
-      },
-      {
-        pos: vec(engine.halfDrawWidth, engine.halfDrawHeight),
-      },
-    );
-
-    const rect = new Rectangle({
-      width: 100,
-      height: 25,
-      color: Color.Green,
+    document.getElementById('play')!.addEventListener('click', () => {
+      engine.goToScene('game');
     });
+  }
 
-    const group = new GraphicsGroup({
-      members: [rect],
-    });
+  // eslint-disable-next-line class-methods-use-this
+  override onActivate(): void {
+    document.getElementById('tutorial')!.classList.remove('hidden');
+  }
 
-    playButton.graphics.add(group);
-
-    this.add(playButton);
+  // eslint-disable-next-line class-methods-use-this
+  override onDeactivate(): void {
+    document.getElementById('tutorial')!.classList.add('hidden');
   }
 }

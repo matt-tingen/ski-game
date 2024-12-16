@@ -8,7 +8,7 @@ body,
 html,
 :root {
   margin: 0;
-  background: #2185d0;
+  background: #4b5a76;
   touch-action: none;
   overscroll-behavior: none;
   height: 100lvh;
@@ -66,8 +66,14 @@ html,
   left: 50%;
 }
 
+@media (pointer: coarse) {
+  .no-touch {
+    display: none;
+  }
+}
+
 @media not (pointer: coarse) {
-  .turn-btn {
+  .touch {
     display: none;
   }
 }
@@ -156,6 +162,39 @@ label[for='volume-input'] {
   font-size: 2em;
 }
 
+#tutorial {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+
+  width: 90lvw;
+  max-width: 600px;
+
+  position: absolute;
+  top: 120px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+#tutorial h1 {
+  color: #8b1a1a;
+  -webkit-text-stroke: 0.15em white;
+  paint-order: stroke fill;
+}
+
+#tutorial > * {
+  margin: 0;
+  color: white;
+}
+
+#tutorial img {
+  background: #cfe7f7;
+  image-rendering: pixelated;
+  padding: 5%;
+  padding-top: 0;
+}
+
 .hidden {
-  display: none;
+  display: none !important;
 }

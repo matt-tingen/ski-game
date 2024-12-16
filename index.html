@@ -6,17 +6,38 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="manifest" href="./manifest.json" />
-    <title>Spicy Slolam</title>
+    <title>Spicy Slalom</title>
 
     <link rel="stylesheet" href="./node_modules/nes.css/css/nes.min.css" />
     <link rel="stylesheet" href="./index.css" />
   </head>
   <body>
-    <div id="container"><canvas id="game"></canvas></div>
+    <div id="container">
+      <canvas id="game"></canvas>
+    </div>
 
-    <button id="left" class="turn-btn"></button>
-    <button id="right" class="turn-btn"></button>
+    <div id="tutorial" class="hidden">
+      <h1>Spicy Slalom</h1>
 
+      <p>Ski down the slope and try to set a record time!</p>
+
+      <p>
+        Pass between flags to get a speed boost, but watch out for dangerous
+        obstacles.
+      </p>
+
+      <img height="176" src="./src/images/tutorial.png" />
+
+      <p class="touch">Tap the left and right halves of the screen to turn.</p>
+      <p class="no-touch">Press the arrow keys or A/D to turn.</p>
+
+      <button type="button" id="play" class="nes-btn is-success">
+        Hit the slopes!
+      </button>
+    </div>
+
+    <button type="button" id="left" class="turn-btn touch"></button>
+    <button type="button" id="right" class="turn-btn touch"></button>
     <div id="volume-container">
       <div id="mutes">
         <label>

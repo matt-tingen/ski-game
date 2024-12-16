@@ -71,3 +71,5 @@ class CustomLoader extends Loader {
 }
 
 export const loader = new CustomLoader(Object.values(Resources).flat());
+
+loader.backgroundColor = 'transparent';

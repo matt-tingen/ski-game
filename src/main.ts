@@ -1,20 +1,28 @@
-import {
-  Color,
-  DisplayMode,
-  Engine,
-  FadeInOut,
-  ImageFiltering,
-} from 'excalibur';
+import { once } from 'es-toolkit';
+import { Color, DisplayMode, Engine, ImageFiltering } from 'excalibur';
 import { MyLevel } from './level';
 import { MainMenu } from './mainMenu';
 import { Reset } from './reset';
 import { loader, Resources } from './resources';
 import { initVolume } from './volume';
 
+const startMusic = once(() => {
+  Resources.SpaceSong.instanceVolume = 0.7;
+  Resources.SpaceSong.loop = true;
+  Resources.SpaceSong.play();
+});
+
+const requestMusic = () => {
+  if (!navigator.userActivation || navigator.userActivation.hasBeenActive) {
+    startMusic();
+  }
+};
+
 const game = new Engine({
   width: 300,
   height: 800,
   canvasElementId: 'game',
+  backgroundColor: Color.Transparent,
   displayMode: DisplayMode.FitContainer,
   pixelArt: true,
   antialiasing: {
@@ -25,6 +33,7 @@ const game = new Engine({
     menu: MainMenu,
     reset: Reset,
   },
+  suppressPlayButton: true,
   configurePerformanceCanvas2DFallback: {
     allow: true,
     showPlayerMessage: true,
@@ -32,18 +41,18 @@ const game = new Engine({
 });
 
 game
-  .start('game', {
+  .start('menu', {
     loader,
-    inTransition: new FadeInOut({
-      duration: 1000,
-      direction: 'in',
-      color: Color.ExcaliburBlue,
-    }),
   })
   .then(() => {
-    Resources.SpaceSong.instanceVolume = 0.7;
-    Resources.SpaceSong.loop = true;
-    Resources.SpaceSong.play();
+    requestMusic();
   });
 
 initVolume();
+
+// https://developer.mozilla.org/en-US/docs/Web/Security/User_activation
+['keydown', 'mousedown', 'pointerdown', 'pointerup', 'touchend'].forEach(
+  (e) => {
+    document.addEventListener(e, requestMusic);
+  },
+);
