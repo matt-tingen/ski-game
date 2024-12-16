@@ -57,6 +57,13 @@ export class MyLevel extends Scene {
         bottom: this.mapBottom,
       }),
     );
+
+    const resetBtn = document.getElementById('reset')!;
+
+    resetBtn.classList.remove('hidden');
+    resetBtn.addEventListener('click', () => {
+      this.reset(engine);
+    });
   }
 
   private addTrails() {
@@ -141,12 +148,15 @@ export class MyLevel extends Scene {
 
   override onActivate(context: SceneActivationContext<unknown>): void {
     this.timer.resume();
-    document.getElementById('game-btns')?.classList.remove('hidden');
   }
 
   override onDeactivate(context: SceneActivationContext): void {
     this.timer.pause();
-    document.getElementById('game-btns')?.classList.add('hidden');
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  private reset(engine: Engine) {
+    engine.goToScene('reset');
   }
 
   override onPostUpdate(engine: Engine, elapsedMs: number): void {
@@ -162,7 +172,7 @@ export class MyLevel extends Scene {
     }
 
     if (engine.input.keyboard.wasPressed(Keys.R)) {
-      engine.goToScene('reset');
+      this.reset(engine);
     }
   }
 }

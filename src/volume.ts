@@ -1,9 +1,10 @@
 import { music, sfx } from './resources';
 import { SoundChannel } from './SoundChannel';
 
-const initMuteButton = (id: string, channel: SoundChannel) => {
-  const btn = document.getElementById(id) as HTMLButtonElement;
+const initMute = (id: string, channel: SoundChannel) => {
+  const btn = document.getElementById(id) as HTMLInputElement;
 
+  btn.checked = !channel.muted;
   btn.classList.toggle('is-primary', !channel.muted);
   btn.addEventListener('click', () => {
     btn.classList.toggle('is-primary');
@@ -30,6 +31,6 @@ export const initVolume = () => {
   input.value = sfx.volume.toString();
   progress.value = sfx.volume;
 
-  initMuteButton('sfx', sfx);
-  initMuteButton('music', music);
+  initMute('sfx', sfx);
+  initMute('music', music);
 };
