@@ -1,0 +1,10 @@
+CREATE TABLE IF NOT EXISTS records (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    seed TEXT(20) NOT NULL,
+    ms INTEGER NOT NULL CHECK(ms >= 0),
+    name TEXT(40) NOT NULL,
+    created DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT unique_seed_name UNIQUE (seed, name)
+);
+
+CREATE INDEX IF NOT EXISTS idx_seed ON records(seed);

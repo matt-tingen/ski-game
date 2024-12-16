@@ -4,3 +4,6 @@ dist
 .parcel-cache
 loaded.png
 play.png
+.env
+# Local Netlify folder
+.netlify

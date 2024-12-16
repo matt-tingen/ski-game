@@ -15,6 +15,6 @@
     "noFallthroughCasesInSwitch": true,
     "skipLibCheck": true
   },
-  "include": ["src"],
+  "include": ["src", "netlify"],
   "exclude": ["src/tiled"]
 }

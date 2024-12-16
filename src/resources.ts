@@ -22,8 +22,9 @@ import textTilemapPath from './images/textTilemap.png';
 import tilemapPath from './images/tilemap.png';
 import { SoundChannel } from './SoundChannel';
 
-export const sfx = new SoundChannel('sfx');
-export const music = new SoundChannel('music');
+const defaultVolume = 0.5;
+export const sfx = new SoundChannel('sfx', defaultVolume);
+export const music = new SoundChannel('music', defaultVolume);
 
 export const Resources = {
   Checker: new ImageSource(checkerPath),
