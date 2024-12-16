@@ -42,6 +42,7 @@ game
   })
   .then(() => {
     Resources.SpaceSong.instanceVolume = 0.7;
+    Resources.SpaceSong.loop = true;
     Resources.SpaceSong.play();
   });
 
