@@ -10,6 +10,7 @@ html,
   margin: 0;
   background: #2185d0;
   touch-action: none;
+  overscroll-behavior: none;
   height: 100lvh;
 }
 
@@ -21,9 +22,20 @@ html,
 }
 
 #container {
+  position: absolute;
+  bottom: 0;
+
   width: 100lvw;
-  display: grid;
-  place-items: center;
+  height: 100lvh;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+@media (min-width: 350px) and (max-width: 700px) {
+  #container {
+    height: calc(100lvh - 70px);
+  }
 }
 
 .turn-btn {
@@ -62,50 +74,51 @@ html,
   display: flex;
   gap: 8px;
 }
+
 #volume-container {
   position: absolute;
   top: 0;
   left: 0;
   padding: 8px;
 
-  display: grid;
-  grid-template-areas:
-    'music'
-    'sfx'
-    'label'
-    'volume';
-  grid-template-columns: 120px;
-  overflow: visible;
+  display: flex;
+  flex-direction: column;
   gap: 8px;
 }
-#music {
-  grid-area: music;
+#mutes {
+  display: flex;
+  gap: 32px;
 }
-#sfx {
-  grid-area: sfx;
-}
-#volume-container label {
-  grid-area: label;
+label {
   margin: 0;
-  margin-top: 8px;
 }
-#volume-input,
-#volume-progress {
+label[for='volume-input'] {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: flex-start;
+  color: white;
+}
+#volume {
+  display: grid;
+  grid-template-areas: 'overlap';
+}
+#volume > * {
+  grid-area: overlap;
+}
+
+#volume-container .nes-checkbox {
+  margin-left: 8px;
+}
+#volume > * {
   grid-area: volume;
-  height: 40px;
-  width: 200px;
-  transform-origin: top right;
-  transform: rotate(-0.25turn) translateY(-200px);
+  height: 1.25em;
+  width: 140px;
 }
 
 #volume-input {
   appearance: none;
   opacity: 0;
-}
-
-#volume-container button:not(.muted) img[data-off],
-#volume-container button.muted img[data-on] {
-  display: none;
 }
 
 .outline-text {

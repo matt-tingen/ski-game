@@ -5,6 +5,7 @@
     <link rel="icon" href="favicon.ico" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="manifest" href="./manifest.json" />
     <title>Spicy Slolam</title>
 
     <link rel="stylesheet" href="./node_modules/nes.css/css/nes.min.css" />
@@ -17,24 +18,47 @@
     <button id="right" class="turn-btn"></button>
 
     <div id="volume-container">
-      <button id="music" data-volume="high" class="nes-btn">Music</button>
-      <button id="sfx" data-volume="high" class="nes-btn">SFX</button>
-      <label for="volume-input" class="outline-text">Volume</label>
-      <progress
-        id="volume-progress"
-        class="nes-progress is-primary"
-        type="range"
-        value=".5"
-        max="1"
-      ></progress>
-      <input
-        id="volume-input"
-        class="nes-pointer nes-progress"
-        type="range"
-        min="0"
-        max="1"
-        step="0.1"
-      />
+      <div id="mutes">
+        <label>
+          <input
+            type="checkbox"
+            id="music"
+            data-volume="high"
+            class="nes-checkbox is-dark"
+          />
+          <span>Music</span>
+        </label>
+        <label>
+          <input
+            type="checkbox"
+            id="sfx"
+            data-volume="high"
+            class="nes-checkbox is-dark"
+          />
+          <span>SFX</span>
+        </label>
+      </div>
+
+      <label for="volume-input">
+        <span>Vol</span>
+        <div id="volume">
+          <progress
+            id="volume-progress"
+            class="nes-progress is-primary"
+            type="range"
+            value=".5"
+            max="1"
+          ></progress>
+          <input
+            id="volume-input"
+            class="nes-pointer nes-progress"
+            type="range"
+            min="0"
+            max="1"
+            step="0.1"
+          />
+        </div>
+      </label>
     </div>
 
     <div id="game-container">

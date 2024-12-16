@@ -12,10 +12,10 @@ import { loader, Resources } from './resources';
 import { initVolume } from './volume';
 
 const game = new Engine({
-  width: 500,
+  width: 300,
   height: 800,
   canvasElementId: 'game',
-  displayMode: DisplayMode.FitScreen,
+  displayMode: DisplayMode.FitContainer,
   pixelArt: true,
   antialiasing: {
     filtering: ImageFiltering.Pixel,
