@@ -91,7 +91,6 @@ export class MyLevel extends Scene {
     const random = seedRandom(seed);
     const detailRandom = seedRandom(random().toString());
     const roomRandom = seedRandom(random().toString());
-    const jiggleRandom = seedRandom(random().toString());
     const slolamRandom = seedRandom(random().toString());
 
     let i = 0;
