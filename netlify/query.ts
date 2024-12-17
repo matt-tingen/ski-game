@@ -40,5 +40,12 @@ export const query = async (query: Query) => {
     body: JSON.stringify(query),
   });
 
-  return (await response.json()) as QueryResponse;
+  const queryResponse = (await response.json()) as QueryResponse;
+
+  if (!queryResponse.success) {
+    // eslint-disable-next-line no-console
+    console.error(queryResponse);
+  }
+
+  return queryResponse;
 };

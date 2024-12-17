@@ -1,4 +1,4 @@
-import { memoize } from 'es-toolkit';
+import { groupBy, memoize, minBy } from 'es-toolkit';
 import { BASE_FUNCTIONS_URL } from './netlify';
 import { rank } from './rank';
 
@@ -35,20 +35,37 @@ const uploadScore = async (seed: string, name: string, ms: number) => {
   });
 };
 
+const uniqRows = (rows: LeaderboardRow[]) => {
+  const byName = groupBy(rows, (row) => row.name);
+
+  return Object.entries(byName).map(
+    ([name, rows]): LeaderboardRow => ({
+      name,
+      ms: minBy(rows, (r) => r.ms)!.ms,
+    }),
+  );
+};
+
 export const showLeaderboard = (seed: string, ms: number) => {
   let name = localStorage.getItem(nameStorageKey);
 
   const showTable = () => {
-    const rows: LeaderboardRow[] = [
-      ...(leaderboardCache.get(seed) ?? []),
-      { name: name!, ms },
-    ];
-
-    populateLeaderboard(rows);
+    populateLeaderboard(
+      uniqRows([
+        ...(leaderboardCache.get(seed) ?? []),
+        {
+          name: name!,
+          ms,
+        },
+      ]),
+    );
     tableContainer.classList.remove('hidden');
   };
 
+  const upload = () => uploadScore(seed, name!, ms);
+
   if (name) {
+    upload();
     showTable();
   } else {
     form.classList.remove('hidden');
@@ -59,8 +76,6 @@ export const showLeaderboard = (seed: string, ms: number) => {
   nameInput.addEventListener('input', () => {
     nameInput.classList.remove('is-error');
   });
-
-  const upload = () => uploadScore(seed, name!, ms);
 
   const onSubmit = (event: SubmitEvent) => {
     event.preventDefault();
@@ -75,8 +90,8 @@ export const showLeaderboard = (seed: string, ms: number) => {
 
     localStorage.setItem(nameStorageKey, nameValue);
     form.classList.add('hidden');
-    showTable();
     name = nameValue;
+    showTable();
     upload();
   };
 

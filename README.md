@@ -14,8 +14,6 @@ Setting up a database is optional, but the leaderboard will have limited functio
 ```ini
 D1_REST_URL=https://api.cloudflare.com/client/v4/accounts/{your_account_id}/d1/database/{your_database_id}/query
 D1_API_TOKEN=...
-# The origin used by vite in dev
-ALLOW_ORIGIN=http://localhost:5173
 ```
 
 ### Run
