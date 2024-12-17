@@ -8,9 +8,9 @@ import { loader, Resources } from './resources';
 import { initVolume } from './volume';
 
 const startMusic = once(() => {
-  Resources.SpaceSong.instanceVolume = 0.7;
-  Resources.SpaceSong.loop = true;
-  Resources.SpaceSong.play();
+  Resources.ArcadeSong.instanceVolume = 0.6;
+  Resources.ArcadeSong.loop = true;
+  Resources.ArcadeSong.play();
 });
 
 const requestMusic = () => {

@@ -1,16 +1,6 @@
 import { ImageSource, Loader } from 'excalibur';
-import spaceSongPath from './audio/8-bit-space-123218.mp3';
+import arcadeSongPath from './audio/8-bit-arcade-mode-158814.mp3';
 import flagHitPath from './audio/flaghit.wav';
-import footstepCarpet0PathOgg from './audio/footstep_carpet_000.ogg';
-import footstepCarpet0PathWav from './audio/footstep_carpet_000.wav';
-import footstepCarpet1PathOgg from './audio/footstep_carpet_001.ogg';
-import footstepCarpet1PathWav from './audio/footstep_carpet_001.wav';
-import footstepCarpet2PathOgg from './audio/footstep_carpet_002.ogg';
-import footstepCarpet2PathWav from './audio/footstep_carpet_002.wav';
-import footstepCarpet3PathOgg from './audio/footstep_carpet_003.ogg';
-import footstepCarpet3PathWav from './audio/footstep_carpet_003.wav';
-import footstepCarpet4PathOgg from './audio/footstep_carpet_004.ogg';
-import footstepCarpet4PathWav from './audio/footstep_carpet_004.wav';
 import footstepSnow0PathOgg from './audio/footstep_snow_000.ogg';
 import footstepSnow0PathWav from './audio/footstep_snow_000.wav';
 import footstepSnow1PathOgg from './audio/footstep_snow_001.ogg';
@@ -47,13 +37,6 @@ export const Resources = {
   Tilemap: new ImageSource(tilemapPath),
   TextTilemap: new ImageSource(textTilemapPath),
 
-  FootstepCarpet: [
-    sfx.from(footstepCarpet0PathOgg, footstepCarpet0PathWav),
-    sfx.from(footstepCarpet1PathOgg, footstepCarpet1PathWav),
-    sfx.from(footstepCarpet2PathOgg, footstepCarpet2PathWav),
-    sfx.from(footstepCarpet3PathOgg, footstepCarpet3PathWav),
-    sfx.from(footstepCarpet4PathOgg, footstepCarpet4PathWav),
-  ],
   FootstepSnow: [
     sfx.from(footstepSnow0PathOgg, footstepSnow0PathWav),
     sfx.from(footstepSnow1PathOgg, footstepSnow1PathWav),
@@ -69,7 +52,7 @@ export const Resources = {
     sfx.from(impactMining4PathOgg, impactMining4PathWav),
   ],
 
-  SpaceSong: music.from(spaceSongPath),
+  ArcadeSong: music.from(arcadeSongPath),
   Powerup: sfx.from(powerupPath),
   // W=8000,f=851.528,v=46.528,V=558.333,t=127.083,T=0.172,_=0.043,d=249.113,D=0.106,p=1.342,a=0.6,A=1.9,b=0.3,r=2.6,s=4,S=9.317,z=Down,g=0.705,l=0.35
   FlagHit: sfx.from(flagHitPath),
