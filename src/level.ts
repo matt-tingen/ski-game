@@ -13,7 +13,7 @@ import {
 import seedRandom from 'seed-random';
 import { BackgroundColor } from './bg';
 import { leftTurnButton, rightTurnButton } from './elements';
-import { FlagSpawn } from './flagSpawn';
+import { AltFlagSpawn, FlagSpawn } from './flagSpawn';
 import { fetchLeaderboard, showLeaderboard } from './leaderboard';
 import { LockToActorAxisOffsetCameraStrategy } from './LockToActorAxisOffsetCameraStrategy';
 import { Player } from './player';
@@ -125,11 +125,13 @@ export class MyLevel extends Scene {
 
     addRoom(this, detailRandom, i++, false, 'finish');
 
-    this.addGates(slolamRandom);
+    [FlagSpawn, AltFlagSpawn].forEach((spawn) => {
+      this.addGates(spawn, slolamRandom);
+    });
   }
 
-  private addGates(slolamRandom: () => number) {
-    const flagSpawns = this.actors.filter((a) => a instanceof FlagSpawn);
+  private addGates(spawn: typeof FlagSpawn, slolamRandom: () => number) {
+    const flagSpawns = this.actors.filter((a) => a instanceof spawn);
     const rows = Object.values(groupBy(flagSpawns, (a) => a.pos.y));
 
     rows.forEach((row) => {
