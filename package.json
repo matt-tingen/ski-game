@@ -3,10 +3,10 @@
   "version": "0.0.0",
   "author": "Matt Tingen <matt.tingen@gmail.com>",
   "scripts": {
-    "build": "tsc && vite build",
+    "build": "tsc && VITE_DEPLOY_URL=$DEPLOY_URL vite build",
     "format": "prettier --ignore-path .gitignore --write src",
     "lint": "eslint src",
-    "start": "vite --host",
+    "start": "VITE_DEPLOY_URL=$DEPLOY_URL vite --host",
     "test": "pnpm run build && npx playwright test",
     "test:integration-update": "npx playwright test --update-snapshots",
     "ts": "tsc --watch"

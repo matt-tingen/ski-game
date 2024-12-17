@@ -14,8 +14,6 @@ Setting up a database is optional, but the leaderboard will have limited functio
 ```
 D1_REST_URL=https://api.cloudflare.com/client/v4/accounts/{account_id}/d1/database/{database_id}/query
 D1_API_TOKEN=...
-# This tells the frontend that a database is enabled
-VITE_USE_BACKEND=1
 ```
 
 ### Run

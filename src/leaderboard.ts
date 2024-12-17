@@ -1,4 +1,5 @@
 import { memoize } from 'es-toolkit';
+import { BASE_FUNCTIONS_URL } from './netlify';
 import { rank } from './rank';
 
 const nameStorageKey = 'name';
@@ -17,8 +18,10 @@ export const hideLeaderboard = () => {
   dialog.close();
 };
 
-const uploadScore = async (seed: string, name: string, ms: number) =>
-  await fetch('/.netlify/functions/record', {
+const uploadScore = async (seed: string, name: string, ms: number) => {
+  if (!BASE_FUNCTIONS_URL) return;
+
+  return await fetch(`${BASE_FUNCTIONS_URL}/record`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -30,6 +33,7 @@ const uploadScore = async (seed: string, name: string, ms: number) =>
       ms,
     }),
   });
+};
 
 export const showLeaderboard = (seed: string, ms: number) => {
   let name = localStorage.getItem(nameStorageKey);
@@ -119,8 +123,10 @@ export const populateLeaderboard = (rows: LeaderboardRow[]) => {
 const leaderboardCache = new Map<string, LeaderboardRow[]>();
 
 export const fetchLeaderboard = memoize(async (seed: string) => {
+  if (!BASE_FUNCTIONS_URL) return [];
+
   const response = await fetch(
-    `/.netlify/functions/leaderboard?seed=${encodeURIComponent(seed)}`,
+    `${BASE_FUNCTIONS_URL}/leaderboard?seed=${encodeURIComponent(seed)}`,
   );
 
   const json = await response.json();
