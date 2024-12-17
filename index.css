@@ -140,7 +140,6 @@ label[for='volume-input'] {
   margin-left: 8px;
 }
 #volume > * {
-  grid-area: volume;
   height: 1.25em;
   width: 140px;
 }
