@@ -11,6 +11,7 @@ import {
   vec,
 } from 'excalibur';
 import seedRandom from 'seed-random';
+import { BackgroundColor } from './bg';
 import { leftTurnButton, rightTurnButton } from './elements';
 import { FlagSpawn } from './flagSpawn';
 import { fetchLeaderboard, showLeaderboard } from './leaderboard';
@@ -34,6 +35,8 @@ import { zIndices } from './zIndices';
 const tryAgainBtn = document.getElementById('try-again') as HTMLButtonElement;
 
 export class MyLevel extends Scene {
+  backgroundColor = BackgroundColor;
+
   private player!: Player;
 
   private roomCount = 16;

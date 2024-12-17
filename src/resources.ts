@@ -22,6 +22,7 @@ import impactMining3PathWav from './audio/impactMining_003.wav';
 import impactMining4PathOgg from './audio/impactMining_004.ogg';
 import impactMining4PathWav from './audio/impactMining_004.wav';
 import powerupPath from './audio/powerup.wav';
+import { BG_HEX } from './bg';
 import checkerPath from './images/checker.png';
 import textTilemapPath from './images/textTilemap.png';
 import tilemapPath from './images/tilemap.png';
@@ -59,6 +60,7 @@ export const Resources = {
 } as const;
 
 class CustomLoader extends Loader {
+  backgroundColor = BG_HEX;
   protected override _playButtonStyles = '';
   protected override get _playButton() {
     const btn = super._playButton;
@@ -70,5 +72,3 @@ class CustomLoader extends Loader {
 }
 
 export const loader = new CustomLoader(Object.values(Resources).flat());
-
-loader.backgroundColor = 'transparent';
