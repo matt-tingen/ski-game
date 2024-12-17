@@ -34,6 +34,9 @@ const game = new Engine({
     menu: MainMenu,
     reset: Reset,
   },
+  fixedUpdateFps: new URL(location.toString()).searchParams.get('fixed')
+    ? Number(new URL(location.toString()).searchParams.get('fixed'))
+    : undefined,
   suppressPlayButton: true,
   configurePerformanceCanvas2DFallback: {
     allow: true,
