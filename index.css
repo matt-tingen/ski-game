@@ -206,9 +206,22 @@ label[for='volume-input'] {
   overflow-y: auto;
   scrollbar-width: none;
 }
+#leaderboard-container form button {
+  margin-top: 8px;
+}
 
-/* Time */
+/* Numeric */
 #leaderboard td:nth-child(1),
 #leaderboard td:nth-child(3) {
   text-align: right;
+}
+
+/* Name */
+#leaderboard td:nth-child(2) > span {
+  max-width: min(30lvw, 500px);
+
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
 }

@@ -123,8 +123,10 @@ export const populateLeaderboard = (rows: LeaderboardRow[]) => {
       tr.append(
         ...data.map((datum) => {
           const td = document.createElement('td');
+          const span = document.createElement('span');
 
-          td.textContent = datum.toString();
+          span.textContent = datum.toString();
+          td.append(span);
 
           return td;
         }),
