@@ -1,12 +1,4 @@
-import {
-  Actor,
-  Collider,
-  CollisionContact,
-  CollisionType,
-  Side,
-  vec,
-  Vector,
-} from 'excalibur';
+import { Actor, CollisionType, vec, Vector } from 'excalibur';
 import { sprites } from './sprites';
 
 export class Grass extends Actor {
@@ -27,15 +19,15 @@ export class Grass extends Actor {
   override onCollisionStart(): void {
     this.actions.moveBy({
       offset: vec(1, 0),
-      durationMs: 50,
+      duration: 50,
     });
     this.actions.moveBy({
       offset: vec(-2, 0),
-      durationMs: 100,
+      duration: 100,
     });
     this.actions.moveBy({
       offset: vec(1, 0),
-      durationMs: 50,
+      duration: 50,
     });
   }
 }
