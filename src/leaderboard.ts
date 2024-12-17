@@ -31,7 +31,7 @@ const uploadScore = async (seed: string, name: string, ms: number) => {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      // 'X-Please-Honor-System': 'I am not a cheater',
+      'X-Anti-Cheat': 'please use the honor system',
     },
     body: JSON.stringify({
       seed,
