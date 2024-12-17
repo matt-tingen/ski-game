@@ -42,14 +42,3 @@ export const query = async (query: Query) => {
 
   return (await response.json()) as QueryResponse;
 };
-
-export const queryResultResponse = (queryResponse: QueryResponse) => {
-  const {
-    result: [results],
-    success,
-  } = queryResponse;
-
-  return new Response(JSON.stringify(results), {
-    status: success ? 200 : 500,
-  });
-};

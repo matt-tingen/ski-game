@@ -1,9 +1,10 @@
 import type { Context } from '@netlify/functions';
 import dedent from 'dedent';
-import { query, queryResultResponse } from '../query';
+import { cors } from '../cors';
+import { query } from '../query';
 
 // eslint-disable-next-line import/no-default-export
-export default async (req: Request, context: Context) => {
+export default cors(async (req: Request, context: Context) => {
   const { seed, ms, name } = await req.json();
 
   if (
@@ -32,5 +33,5 @@ export default async (req: Request, context: Context) => {
     params: [seed, ms, name, seed],
   });
 
-  return queryResultResponse(result);
-};
+  return new Response(null, { status: result.success ? 200 : 500 });
+});

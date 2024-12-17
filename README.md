@@ -11,9 +11,11 @@ Setting up a database is optional, but the leaderboard will have limited functio
 3. Create an API key with access to the D1 instance.
 4. Add an `.env` file in the root of the repo:
 
-```
-D1_REST_URL=https://api.cloudflare.com/client/v4/accounts/{account_id}/d1/database/{database_id}/query
+```ini
+D1_REST_URL=https://api.cloudflare.com/client/v4/accounts/{your_account_id}/d1/database/{your_database_id}/query
 D1_API_TOKEN=...
+# The origin used by vite in dev
+ALLOW_ORIGIN=http://localhost:5173
 ```
 
 ### Run
