@@ -225,3 +225,7 @@ label[for='volume-input'] {
   -webkit-line-clamp: 3;
   overflow: hidden;
 }
+
+#close {
+  margin-top: 16px;
+}

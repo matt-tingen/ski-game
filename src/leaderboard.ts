@@ -13,10 +13,11 @@ const tableContainer = document.querySelector<HTMLFormElement>('#leaderboard')!;
 const table = document.querySelector<HTMLFormElement>('#leaderboard table')!;
 const tableBody = table.querySelector<HTMLFormElement>('tbody')!;
 const nameInput = document.getElementById('name') as HTMLInputElement;
+const closeBtn = document.getElementById('close') as HTMLButtonElement;
 
-export const hideLeaderboard = () => {
+closeBtn.addEventListener('click', () => {
   dialog.close();
-};
+});
 
 const uploadScore = async (seed: string, name: string, ms: number) => {
   if (!BASE_FUNCTIONS_URL) return;

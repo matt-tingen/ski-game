@@ -1,5 +1,6 @@
 import { once } from 'es-toolkit';
 import { Color, DisplayMode, Engine, ImageFiltering } from 'excalibur';
+import { showLeaderboard } from './leaderboard';
 import { MyLevel } from './level';
 import { MainMenu } from './mainMenu';
 import { Reset } from './reset';
@@ -56,3 +57,5 @@ initVolume();
     document.addEventListener(e, requestMusic);
   },
 );
+
+showLeaderboard('asdf', 123);
