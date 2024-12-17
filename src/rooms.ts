@@ -4,6 +4,7 @@ import { FlagSpawn } from './flagSpawn';
 import map from './map.json';
 import { Resources } from './resources';
 import { Rock } from './rock';
+import { Snowman } from './snowman';
 import { Spawn } from './spawn';
 import { sprites } from './sprites';
 import { zIndices } from './zIndices';
@@ -21,6 +22,7 @@ const entityMap = [
   sprites.liftLineShadow,
   sprites.liftChairShadow,
   FlagSpawn,
+  Snowman,
 ];
 
 const { mapHeight: roomHeight, mapWidth: roomWidth, tileSize } = map;
@@ -50,10 +52,16 @@ const addLayer = (scene: Scene, tilemap: TileMap, layer: Layer) => {
   });
 };
 
+const flipLayer = (layer: Layer): Layer => ({
+  ...layer,
+  tiles: layer.tiles.map((tile) => ({ ...tile, x: roomWidth - tile.x - 1 })),
+});
+
 export const addRoom = (
   scene: Scene,
-  random: () => number,
+  detailRandom: () => number,
   positionIndex: number,
+  flip: boolean,
   ...roomNames: string[]
 ) => {
   const pos = vec(0, positionIndex * ROOM_HEIGHT);
@@ -70,7 +78,9 @@ export const addRoom = (
   tilemap.z = zIndices.tilemap;
 
   for (const tile of tilemap.tiles) {
-    tile.addGraphic(random() < 0.1 ? sprites.bankDetail : sprites.bankPlain);
+    tile.addGraphic(
+      detailRandom() < 0.1 ? sprites.bankDetail : sprites.bankPlain,
+    );
   }
 
   scene.add(tilemap);
@@ -80,6 +90,6 @@ export const addRoom = (
 
     if (!layer) throw new Error(`Room not defined: "${name}"`);
 
-    addLayer(scene, tilemap, layer);
+    addLayer(scene, tilemap, flip ? flipLayer(layer) : layer);
   });
 };

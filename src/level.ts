@@ -107,7 +107,7 @@ export class MyLevel extends Scene {
 
     let i = 0;
 
-    addRoom(this, detailRandom, i++, 'liftBg', 'lift');
+    addRoom(this, detailRandom, i++, false, 'liftBg', 'lift');
 
     const eligibleRooms = without(roomNames, 'lift', 'liftBg', 'finish');
 
@@ -117,10 +117,10 @@ export class MyLevel extends Scene {
           ? []
           : [withSeededRandom(roomRandom, () => sample(eligibleRooms))];
 
-      addRoom(this, detailRandom, i++, ...rooms);
+      addRoom(this, detailRandom, i++, roomRandom() > 0.5, ...rooms);
     }
 
-    addRoom(this, detailRandom, i++, 'finish');
+    addRoom(this, detailRandom, i++, false, 'finish');
 
     this.addGates(slolamRandom);
   }
