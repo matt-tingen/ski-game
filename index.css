@@ -198,3 +198,17 @@ label[for='volume-input'] {
 .hidden {
   display: none !important;
 }
+
+#leaderboard-container {
+  top: 80px;
+  max-height: calc(95lvh - 80px);
+  overflow-x: visible;
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+
+/* Time */
+#leaderboard td:nth-child(1),
+#leaderboard td:nth-child(3) {
+  text-align: right;
+}

@@ -12,6 +12,7 @@ import {
 } from 'excalibur';
 import seedRandom from 'seed-random';
 import { FlagSpawn } from './flagSpawn';
+import { fetchLeaderboard, showLeaderboard } from './leaderboard';
 import { LockToActorAxisOffsetCameraStrategy } from './LockToActorAxisOffsetCameraStrategy';
 import { Player } from './player';
 import { RaceTimer } from './RaceTimer';
@@ -34,13 +35,14 @@ export class MyLevel extends Scene {
 
   private roomCount = 16;
 
+  private seed!: string;
   private done = false;
   private timer = new RaceTimer(document.getElementById('timer')!);
 
   override onInitialize(engine: Engine): void {
-    const seed = getSeed();
+    this.seed = getSeed();
 
-    this.initMap(seed);
+    this.initMap(this.seed);
 
     const spawn = this.actors.find((a) => a instanceof Spawn);
     if (!spawn) throw new Error('No spawn set');
@@ -153,6 +155,7 @@ export class MyLevel extends Scene {
   }
 
   override onActivate(context: SceneActivationContext<unknown>): void {
+    void fetchLeaderboard(this.seed);
     this.timer.resume();
   }
 
@@ -166,15 +169,19 @@ export class MyLevel extends Scene {
   }
 
   override onPostUpdate(engine: Engine, elapsedMs: number): void {
-    if (
-      (this.player.dead || this.player.pos.y >= this.mapBottom + 16) &&
-      !this.done
-    ) {
+    const finished = this.player.pos.y >= this.mapBottom + 16;
+
+    if ((this.player.dead || finished) && !this.done) {
       this.done = true;
       this.timer.pause();
       this.player.controlsEnabled = false;
       this.player.dead = true;
-      this.camera.zoomOverTime(engine.drawHeight / this.mapBottom, 2000);
+
+      void this.camera.zoomOverTime(engine.drawHeight / this.mapBottom, 2000);
+
+      if (finished) {
+        showLeaderboard(this.seed, this.timer.ms);
+      }
     }
 
     const clampedX = clamp(this.player.pos.x, 8, ROOM_WIDTH - 8);

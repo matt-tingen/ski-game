@@ -89,6 +89,31 @@
       </button>
     </div>
 
+    <dialog id="leaderboard-container" class="nes-dialog is-rounded">
+      <h2>Leaderboard</h2>
+
+      <form class="hidden" novalidate>
+        <div class="nes-field">
+          <label for="name">Your name</label>
+          <input type="text" id="name" class="nes-input" maxlength="50" />
+        </div>
+        <button>Save</button>
+      </form>
+
+      <div id="leaderboard" class="nes-table-responsive hidden">
+        <table class="nes-table is-bordered is-centered">
+          <thead>
+            <tr>
+              <th>Rank</th>
+              <th>Name</th>
+              <th>Time</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </dialog>
+
     <script type="module" src="./src/main.ts"></script>
   </body>
 </html>
