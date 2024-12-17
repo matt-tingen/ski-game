@@ -1,21 +1,36 @@
 import { ImageSource, Loader } from 'excalibur';
 import spaceSongPath from './audio/8-bit-space-123218.mp3';
 import flagHitPath from './audio/flaghit.wav';
-import footstepCarpet0Path from './audio/footstep_carpet_000.ogg';
-import footstepCarpet1Path from './audio/footstep_carpet_001.ogg';
-import footstepCarpet2Path from './audio/footstep_carpet_002.ogg';
-import footstepCarpet3Path from './audio/footstep_carpet_003.ogg';
-import footstepCarpet4Path from './audio/footstep_carpet_004.ogg';
-import footstepSnow0Path from './audio/footstep_snow_000.ogg';
-import footstepSnow1Path from './audio/footstep_snow_001.ogg';
-import footstepSnow2Path from './audio/footstep_snow_002.ogg';
-import footstepSnow3Path from './audio/footstep_snow_003.ogg';
-import footstepSnow4Path from './audio/footstep_snow_004.ogg';
-import impactMining0Path from './audio/impactMining_000.ogg';
-import impactMining1Path from './audio/impactMining_001.ogg';
-import impactMining2Path from './audio/impactMining_002.ogg';
-import impactMining3Path from './audio/impactMining_003.ogg';
-import impactMining4Path from './audio/impactMining_004.ogg';
+import footstepCarpet0PathOgg from './audio/footstep_carpet_000.ogg';
+import footstepCarpet0PathWav from './audio/footstep_carpet_000.wav';
+import footstepCarpet1PathOgg from './audio/footstep_carpet_001.ogg';
+import footstepCarpet1PathWav from './audio/footstep_carpet_001.wav';
+import footstepCarpet2PathOgg from './audio/footstep_carpet_002.ogg';
+import footstepCarpet2PathWav from './audio/footstep_carpet_002.wav';
+import footstepCarpet3PathOgg from './audio/footstep_carpet_003.ogg';
+import footstepCarpet3PathWav from './audio/footstep_carpet_003.wav';
+import footstepCarpet4PathOgg from './audio/footstep_carpet_004.ogg';
+import footstepCarpet4PathWav from './audio/footstep_carpet_004.wav';
+import footstepSnow0PathOgg from './audio/footstep_snow_000.ogg';
+import footstepSnow0PathWav from './audio/footstep_snow_000.wav';
+import footstepSnow1PathOgg from './audio/footstep_snow_001.ogg';
+import footstepSnow1PathWav from './audio/footstep_snow_001.wav';
+import footstepSnow2PathOgg from './audio/footstep_snow_002.ogg';
+import footstepSnow2PathWav from './audio/footstep_snow_002.wav';
+import footstepSnow3PathOgg from './audio/footstep_snow_003.ogg';
+import footstepSnow3PathWav from './audio/footstep_snow_003.wav';
+import footstepSnow4PathOgg from './audio/footstep_snow_004.ogg';
+import footstepSnow4PathWav from './audio/footstep_snow_004.wav';
+import impactMining0PathOgg from './audio/impactMining_000.ogg';
+import impactMining0PathWav from './audio/impactMining_000.wav';
+import impactMining1PathOgg from './audio/impactMining_001.ogg';
+import impactMining1PathWav from './audio/impactMining_001.wav';
+import impactMining2PathOgg from './audio/impactMining_002.ogg';
+import impactMining2PathWav from './audio/impactMining_002.wav';
+import impactMining3PathOgg from './audio/impactMining_003.ogg';
+import impactMining3PathWav from './audio/impactMining_003.wav';
+import impactMining4PathOgg from './audio/impactMining_004.ogg';
+import impactMining4PathWav from './audio/impactMining_004.wav';
 import powerupPath from './audio/powerup.wav';
 import checkerPath from './images/checker.png';
 import textTilemapPath from './images/textTilemap.png';
@@ -33,25 +48,25 @@ export const Resources = {
   TextTilemap: new ImageSource(textTilemapPath),
 
   FootstepCarpet: [
-    sfx.from(footstepCarpet0Path),
-    sfx.from(footstepCarpet1Path),
-    sfx.from(footstepCarpet2Path),
-    sfx.from(footstepCarpet3Path),
-    sfx.from(footstepCarpet4Path),
+    sfx.from(footstepCarpet0PathOgg, footstepCarpet0PathWav),
+    sfx.from(footstepCarpet1PathOgg, footstepCarpet1PathWav),
+    sfx.from(footstepCarpet2PathOgg, footstepCarpet2PathWav),
+    sfx.from(footstepCarpet3PathOgg, footstepCarpet3PathWav),
+    sfx.from(footstepCarpet4PathOgg, footstepCarpet4PathWav),
   ],
   FootstepSnow: [
-    sfx.from(footstepSnow0Path),
-    sfx.from(footstepSnow1Path),
-    sfx.from(footstepSnow2Path),
-    sfx.from(footstepSnow3Path),
-    sfx.from(footstepSnow4Path),
+    sfx.from(footstepSnow0PathOgg, footstepSnow0PathWav),
+    sfx.from(footstepSnow1PathOgg, footstepSnow1PathWav),
+    sfx.from(footstepSnow2PathOgg, footstepSnow2PathWav),
+    sfx.from(footstepSnow3PathOgg, footstepSnow3PathWav),
+    sfx.from(footstepSnow4PathOgg, footstepSnow4PathWav),
   ],
   ImpactMining: [
-    sfx.from(impactMining0Path),
-    sfx.from(impactMining1Path),
-    sfx.from(impactMining2Path),
-    sfx.from(impactMining3Path),
-    sfx.from(impactMining4Path),
+    sfx.from(impactMining0PathOgg, impactMining0PathWav),
+    sfx.from(impactMining1PathOgg, impactMining1PathWav),
+    sfx.from(impactMining2PathOgg, impactMining2PathWav),
+    sfx.from(impactMining3PathOgg, impactMining3PathWav),
+    sfx.from(impactMining4PathOgg, impactMining4PathWav),
   ],
 
   SpaceSong: music.from(spaceSongPath),
