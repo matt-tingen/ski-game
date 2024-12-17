@@ -64,6 +64,7 @@ export const showLeaderboard = (seed: string, ms: number) => {
           ms,
         },
       ]),
+      name!,
     );
     tableContainer.classList.remove('hidden');
   };
@@ -112,7 +113,10 @@ interface LeaderboardRow {
   ms: number;
 }
 
-export const populateLeaderboard = (rows: LeaderboardRow[]) => {
+export const populateLeaderboard = (
+  rows: LeaderboardRow[],
+  forceNameVisible: string,
+) => {
   tableBody.innerHTML = '';
 
   const sorted = rank(
@@ -122,25 +126,25 @@ export const populateLeaderboard = (rows: LeaderboardRow[]) => {
     ({ name, ms }, rank) => [rank, name, (ms / 1000).toFixed(2)] as const,
   );
 
-  tableBody.append(
-    ...sorted.map((data) => {
-      const tr = document.createElement('tr');
+  sorted.forEach((data, i) => {
+    if (!(i < 10 || data[1] === forceNameVisible)) return;
 
-      tr.append(
-        ...data.map((datum) => {
-          const td = document.createElement('td');
-          const span = document.createElement('span');
+    const tr = document.createElement('tr');
 
-          span.textContent = datum.toString();
-          td.append(span);
+    tr.append(
+      ...data.map((datum) => {
+        const td = document.createElement('td');
+        const span = document.createElement('span');
 
-          return td;
-        }),
-      );
+        span.textContent = datum.toString();
+        td.append(span);
 
-      return tr;
-    }),
-  );
+        return td;
+      }),
+    );
+
+    tableBody.append(tr);
+  });
 };
 
 const leaderboardCache = new Map<string, LeaderboardRow[]>();
