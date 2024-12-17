@@ -159,8 +159,8 @@ label[for='volume-input'] {
 }
 
 #tutorial h1 {
-  color: #8b1a1a;
-  -webkit-text-stroke: 0.15em white;
+  color: #4db8e0;
+  -webkit-text-stroke: 0.15em black;
   paint-order: stroke fill;
 }
 
