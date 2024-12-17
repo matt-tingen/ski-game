@@ -16,8 +16,9 @@ html,
 
 /* https://github.com/nostalgic-css/NES.css/issues/509#issuecomment-2394798028 */
 @media (-webkit-min-device-pixel-ratio: 0) and (min-resolution: 0.001dpcm) {
-  .nes-btn {
-    border-image-repeat: stretch;
+  .nes-btn,
+  .nes-progress {
+    border-image-repeat: stretch !important;
   }
 }
 
@@ -134,6 +135,10 @@ label[for='volume-input'] {
 }
 #volume > * {
   grid-area: overlap;
+}
+#volume-background {
+  background: white;
+  margin: 4px;
 }
 
 #volume-container .nes-checkbox {
