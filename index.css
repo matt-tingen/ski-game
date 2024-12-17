@@ -253,3 +253,8 @@ label[for='volume-input'] {
   color: white;
   animation: bob 2s ease-in-out infinite;
 }
+
+.upside-down {
+  display: inline-block;
+  transform: scaleY(-1);
+}
