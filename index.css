@@ -32,25 +32,6 @@ html,
   justify-content: center;
 }
 
-@media (min-width: 600px) and (max-width: 800px) {
-  #container {
-    height: calc(100lvh - 70px);
-  }
-}
-
-@media (min-width: 325px) and (max-width: 600px) {
-  #container {
-    height: calc(100lvh - 120px);
-  }
-}
-
-@media (max-width: 600px) {
-  #game-container {
-    flex-direction: column-reverse;
-    align-items: flex-end;
-  }
-}
-
 .turn-btn {
   position: absolute;
   inset: 0;
@@ -227,4 +208,25 @@ label[for='volume-input'] {
 
 #close {
   margin-top: 16px;
+}
+
+@keyframes bob {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(10px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+#try-again {
+  position: absolute;
+  right: 30px;
+  top: 55px;
+  white-space: nowrap;
+  color: white;
+  animation: bob 2s ease-in-out infinite;
 }

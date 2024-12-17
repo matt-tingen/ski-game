@@ -30,6 +30,8 @@ import { Spawn } from './spawn';
 import { Trail } from './trail';
 import { zIndices } from './zIndices';
 
+const tryAgainBtn = document.getElementById('try-again') as HTMLButtonElement;
+
 export class MyLevel extends Scene {
   private player!: Player;
 
@@ -69,7 +71,7 @@ export class MyLevel extends Scene {
 
     const resetBtn = document.getElementById('reset')!;
 
-    resetBtn.classList.remove('hidden');
+    document.getElementById('reset-container')!.classList.remove('hidden');
     resetBtn.addEventListener('click', () => {
       this.reset(engine);
     });
@@ -155,6 +157,7 @@ export class MyLevel extends Scene {
   }
 
   override onActivate(context: SceneActivationContext<unknown>): void {
+    tryAgainBtn.classList.add('hidden');
     void fetchLeaderboard(this.seed);
     this.timer.resume();
   }
@@ -172,6 +175,7 @@ export class MyLevel extends Scene {
     const finished = this.player.pos.y >= this.mapBottom + 16;
 
     if ((this.player.dead || finished) && !this.done) {
+      tryAgainBtn.classList.remove('hidden');
       this.done = true;
       this.timer.pause();
       this.player.controlsEnabled = false;
