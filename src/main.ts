@@ -35,7 +35,6 @@ const game = new Engine({
     reset: Reset,
   },
   suppressPlayButton: true,
-  suppressHiDPIScaling: true,
   configurePerformanceCanvas2DFallback: {
     allow: true,
     showPlayerMessage: true,
