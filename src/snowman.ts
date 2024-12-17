@@ -21,8 +21,8 @@ export class Snowman extends Actor {
 
   splat(velocity: Vector) {
     const particle = new Particle({
-      beginColor: new Color(182, 201, 214),
-      endColor: new Color(182, 201, 214),
+      beginColor: Color.White,
+      endColor: Color.White,
       startSize: 10,
       endSize: 35,
       fade: true,
