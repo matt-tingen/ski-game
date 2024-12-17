@@ -168,13 +168,12 @@ export class MyLevel extends Scene {
 
     tryAgainBtn.classList.add('hidden');
     void fetchLeaderboard(this.seed);
-    this.timer.resume();
+    this.timer.running = true;
   }
 
   override onDeactivate(context: SceneActivationContext): void {
     leftTurnButton.classList.add('hidden');
     rightTurnButton.classList.add('hidden');
-    this.timer.pause();
   }
 
   // eslint-disable-next-line class-methods-use-this
@@ -188,7 +187,8 @@ export class MyLevel extends Scene {
     if ((this.player.dead || finished) && !this.done) {
       tryAgainBtn.classList.remove('hidden');
       this.done = true;
-      this.timer.pause();
+      this.timer.running = false;
+      console.log(this.timer.ms);
       this.player.controlsEnabled = false;
       this.player.dead = true;
 
