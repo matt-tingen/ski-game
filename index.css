@@ -200,7 +200,6 @@ label[for='volume-input'] {
 }
 
 #leaderboard-container {
-  top: 80px;
   max-height: calc(95lvh - 80px);
   overflow-x: visible;
   overflow-y: auto;

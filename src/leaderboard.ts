@@ -72,7 +72,7 @@ export const showLeaderboard = (seed: string, ms: number) => {
     form.classList.remove('hidden');
   }
 
-  dialog.show();
+  dialog.showModal();
 
   nameInput.addEventListener('input', () => {
     nameInput.classList.remove('is-error');
