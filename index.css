@@ -32,6 +32,25 @@ html,
   justify-content: center;
 }
 
+@media (min-width: 600px) and (max-width: 800px) {
+  #container {
+    height: calc(100lvh - 70px);
+  }
+}
+
+@media (min-width: 325px) and (max-width: 600px) {
+  #container {
+    height: calc(100lvh - 120px);
+  }
+}
+
+@media (max-width: 600px) {
+  #game-container {
+    flex-direction: column-reverse;
+    align-items: flex-end;
+  }
+}
+
 .turn-btn {
   position: absolute;
   inset: 0;
