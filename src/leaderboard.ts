@@ -19,6 +19,11 @@ closeBtn.addEventListener('click', () => {
   dialog.close();
 });
 
+// Prevent interacting with the game while the dialog is open
+dialog.addEventListener('keydown', (e) => {
+  e.stopPropagation();
+});
+
 const uploadScore = async (seed: string, name: string, ms: number) => {
   if (!BASE_FUNCTIONS_URL) return;
 
