@@ -1,5 +1,6 @@
 import { once } from 'es-toolkit';
 import { Color, DisplayMode, Engine, ImageFiltering } from 'excalibur';
+import { leftTurnButton, rightTurnButton } from './elements';
 import { MyLevel } from './level';
 import { MainMenu } from './mainMenu';
 import { Reset } from './reset';
@@ -57,3 +58,17 @@ initVolume();
     document.addEventListener(e, requestMusic);
   },
 );
+
+[leftTurnButton, rightTurnButton].forEach((btn) => {
+  const onButtonDown = () => {
+    btn.setAttribute('data-active', 'true');
+  };
+
+  const onButtonUp = () => {
+    btn.removeAttribute('data-active');
+  };
+
+  btn.addEventListener('pointerdown', onButtonDown);
+  btn.addEventListener('pointerup', onButtonUp);
+  btn.addEventListener('pointercancel', onButtonUp);
+});

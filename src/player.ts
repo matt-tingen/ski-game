@@ -15,6 +15,7 @@ import {
   Vector,
 } from 'excalibur';
 import { Config } from './Config';
+import { leftTurnButton, rightTurnButton } from './elements';
 import { Grass } from './grass';
 import { Resources } from './resources';
 import { Rock } from './rock';
@@ -39,21 +40,6 @@ export class Player extends Actor {
   private lateralSpeed = 0;
   private collisionCount = 0;
 
-  private leftTurnButton = document.getElementById('left') as HTMLButtonElement;
-  private rightTurnButton = document.getElementById(
-    'right',
-  ) as HTMLButtonElement;
-
-  private buttonHeldMap = new WeakSet<EventTarget>();
-
-  private onButtonDown = ({ target }: PointerEvent) => {
-    if (target) this.buttonHeldMap.add(target);
-  };
-
-  private onButtonUp = ({ target }: PointerEvent) => {
-    if (target) this.buttonHeldMap.delete(target);
-  };
-
   constructor(pos: Vector) {
     super({
       name: 'Player',
@@ -71,9 +57,6 @@ export class Player extends Actor {
     this.skis.forEach((ski) => {
       this.addChild(ski);
     });
-
-    this.setupButton(this.leftTurnButton);
-    this.setupButton(this.rightTurnButton);
 
     this.graphics.add(
       'push',
@@ -94,21 +77,6 @@ export class Player extends Actor {
     this.graphics.use('push');
   }
 
-  private setupButton(btn: HTMLButtonElement) {
-    btn.addEventListener('pointerdown', this.onButtonDown);
-    btn.addEventListener('pointerup', this.onButtonUp);
-    btn.addEventListener('pointercancel', this.onButtonUp);
-  }
-
-  // TODO: this doesn't fire when resetting
-  onPostKill(): void {
-    [this.leftTurnButton, this.rightTurnButton].forEach((btn) => {
-      btn.removeEventListener('pointerdown', this.onButtonDown);
-      btn.removeEventListener('pointerup', this.onButtonUp);
-      btn.removeEventListener('pointercancel', this.onButtonUp);
-    });
-  }
-
   override update(engine: Engine, elapsedMs: number): void {
     if (this.dead) {
       this.vel = Vector.Zero;
@@ -123,14 +91,14 @@ export class Player extends Actor {
       this.controlsEnabled &&
       (engine.input.keyboard.isHeld(Keys.A) ||
         engine.input.keyboard.isHeld(Keys.Left) ||
-        this.buttonHeldMap.has(this.leftTurnButton))
+        leftTurnButton.hasAttribute('data-active'))
     ) {
       this.lateralSpeed += delta(Config.playerTurnSpeed);
     } else if (
       this.controlsEnabled &&
       (engine.input.keyboard.isHeld(Keys.D) ||
         engine.input.keyboard.isHeld(Keys.Right) ||
-        this.buttonHeldMap.has(this.rightTurnButton))
+        rightTurnButton.hasAttribute('data-active'))
     ) {
       this.lateralSpeed -= delta(Config.playerTurnSpeed);
     } else {

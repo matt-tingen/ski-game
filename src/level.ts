@@ -11,6 +11,7 @@ import {
   vec,
 } from 'excalibur';
 import seedRandom from 'seed-random';
+import { leftTurnButton, rightTurnButton } from './elements';
 import { FlagSpawn } from './flagSpawn';
 import { fetchLeaderboard, showLeaderboard } from './leaderboard';
 import { LockToActorAxisOffsetCameraStrategy } from './LockToActorAxisOffsetCameraStrategy';
@@ -157,12 +158,17 @@ export class MyLevel extends Scene {
   }
 
   override onActivate(context: SceneActivationContext<unknown>): void {
+    leftTurnButton.classList.remove('hidden');
+    rightTurnButton.classList.remove('hidden');
+
     tryAgainBtn.classList.add('hidden');
     void fetchLeaderboard(this.seed);
     this.timer.resume();
   }
 
   override onDeactivate(context: SceneActivationContext): void {
+    leftTurnButton.classList.add('hidden');
+    rightTurnButton.classList.add('hidden');
     this.timer.pause();
   }
 
