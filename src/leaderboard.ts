@@ -169,3 +169,13 @@ export const fetchLeaderboard = memoize(async (seed: string) => {
 
   return rows;
 });
+
+export const changeName = (name: unknown) => {
+  if (typeof name === 'string' && name && name.length < 50) {
+    localStorage.setItem(nameStorageKey, name);
+    window.location.reload();
+  } else {
+    // eslint-disable-next-line no-console
+    console.error('Invalid name');
+  }
+};

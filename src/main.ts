@@ -88,6 +88,13 @@ try {
     btn.addEventListener('pointerup', onButtonUp);
     btn.addEventListener('pointercancel', onButtonUp);
   });
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  (window as any).changeName = changeName;
+  // eslint-disable-next-line no-console
+  console.log(
+    "To change your leaderboard name, run `changeName('...')` in the console",
+  );
 } catch {
   onError();
 }
