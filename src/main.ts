@@ -11,6 +11,7 @@ import { MyLevel } from './level';
 import { MainMenu } from './mainMenu';
 import { Reset } from './reset';
 import { loader, Resources } from './resources';
+import { searchParams } from './searchParams';
 import { initVolume } from './volume';
 
 const startMusic = once(() => {
@@ -61,6 +62,7 @@ try {
     })
     .then(() => {
       requestMusic();
+      game.showDebug(Boolean(searchParams.get('debug')));
     })
     .catch(() => {});
 
