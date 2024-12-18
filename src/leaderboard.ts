@@ -3,6 +3,10 @@ import { BASE_FUNCTIONS_URL } from './netlify';
 import { rank } from './rank';
 
 const nameStorageKey = 'name';
+
+const leaderboardCache = new Map<string, LeaderboardRow[]>();
+const personalRecord = new Map<string, number>();
+
 const dialog = document.getElementById(
   'leaderboard-container',
 ) as HTMLDialogElement;
@@ -55,13 +59,17 @@ const uniqRows = (rows: LeaderboardRow[]) => {
 export const showLeaderboard = (seed: string, ms: number) => {
   let name = localStorage.getItem(nameStorageKey);
 
+  const record = Math.min(ms, personalRecord.get(seed) ?? Infinity);
+
+  personalRecord.set(seed, record);
+
   const showTable = () => {
     populateLeaderboard(
       uniqRows([
         ...(leaderboardCache.get(seed) ?? []),
         {
           name: name!,
-          ms,
+          ms: record,
         },
       ]),
       name!,
@@ -152,8 +160,6 @@ export const populateLeaderboard = (
     tableBody.append(tr);
   });
 };
-
-const leaderboardCache = new Map<string, LeaderboardRow[]>();
 
 export const fetchLeaderboard = memoize(async (seed: string) => {
   if (!BASE_FUNCTIONS_URL) return [];
