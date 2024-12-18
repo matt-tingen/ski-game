@@ -99,7 +99,13 @@ export const showLeaderboard = (seed: string, ms: number) => {
     form.classList.add('hidden');
     name = nameValue;
     showTable();
-    upload();
+    void upload();
+
+    setTimeout(() => {
+      if (document.scrollingElement) {
+        document.scrollingElement.scrollTop = 0;
+      }
+    }, 1);
   };
 
   form.addEventListener('submit', onSubmit);

@@ -89,3 +89,12 @@ try {
 } catch {
   onError();
 }
+
+try {
+  if ('virtualKeyboard' in navigator) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (navigator.virtualKeyboard as any).overlaysContent = true;
+  }
+} catch {
+  // noop
+}
