@@ -11,6 +11,9 @@ html,
   background: #4b5a76;
   touch-action: none;
   overscroll-behavior: none;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
   height: 100lvh;
 }
 
