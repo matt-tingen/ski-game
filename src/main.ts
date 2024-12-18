@@ -7,6 +7,7 @@ import {
   rightTurnButton,
   volumeContainer,
 } from './elements';
+import { changeName } from './leaderboard';
 import { MyLevel } from './level';
 import { MainMenu } from './mainMenu';
 import { Reset } from './reset';
