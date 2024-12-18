@@ -47,9 +47,7 @@ try {
       menu: MainMenu,
       reset: Reset,
     },
-    fixedUpdateFps: new URL(location.toString()).searchParams.get('fixed')
-      ? Number(new URL(location.toString()).searchParams.get('fixed'))
-      : undefined,
+    fixedUpdateFps: 100,
     suppressPlayButton: true,
     configurePerformanceCanvas2DFallback: {
       allow: true,
