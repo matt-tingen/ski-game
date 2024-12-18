@@ -1,4 +1,4 @@
-import { sample } from 'es-toolkit';
+import { sample, sumBy } from 'es-toolkit';
 import {
   Actor,
   Animation,
@@ -9,6 +9,7 @@ import {
   CollisionGroupManager,
   CollisionType,
   Engine,
+  Entity,
   Keys,
   Side,
   vec,
@@ -38,7 +39,8 @@ export class Player extends Actor {
 
   private downhillSpeed = Config.playerInitialDownhillSpeed;
   private lateralSpeed = 0;
-  private collisionCount = 0;
+  private pastSlowers = new Set<Entity>();
+  private activeSlowers = new Set<Entity>();
 
   constructor(pos: Vector) {
     super({
@@ -119,12 +121,27 @@ export class Player extends Actor {
       Config.playerMaxTurn,
     );
 
-    if (this.collisionCount) {
-      for (; this.collisionCount > 0; this.collisionCount--) {
-        this.downhillSpeed -= delta(
-          Config.playerCollisionFriction * this.downhillSpeed,
-        );
+    let collisionCount = sumBy(Array.from(this.activeSlowers), (entity) => {
+      if (entity instanceof Snowman) return 2;
+      if (entity instanceof Grass) return 1;
+
+      return 0;
+    });
+
+    this.activeSlowers.forEach((entity) => {
+      this.pastSlowers.add(entity);
+    });
+    this.activeSlowers.clear();
+
+    if (collisionCount) {
+      const pre = this.downhillSpeed;
+
+      for (; collisionCount > 0; collisionCount--) {
+        this.downhillSpeed -=
+          Config.playerCollisionFriction * this.downhillSpeed;
       }
+
+      console.log({ pre, post: this.downhillSpeed });
     } else {
       this.downhillSpeed += delta(Config.playerDownhillAcceleration);
     }
@@ -144,6 +161,12 @@ export class Player extends Actor {
     );
   }
 
+  private addSlower(actor: Actor) {
+    if (!this.pastSlowers.has(actor)) {
+      this.activeSlowers.add(actor);
+    }
+  }
+
   override onCollisionStart(
     self: Collider,
     other: Collider,
@@ -157,20 +180,15 @@ export class Player extends Actor {
       this.controlsEnabled = false;
       sample(Resources.ImpactMining).play();
     } else if (otherOwner instanceof Snowman) {
-      this.collisionCount += 2;
-
+      this.addSlower(otherOwner);
       otherOwner.splat(this.vel);
     } else if (otherOwner instanceof Grass) {
-      this.collisionCount++;
+      this.addSlower(otherOwner);
 
       // TODO: sound
     } else if (otherOwner instanceof SlolamSpeedup) {
       this.downhillSpeed *= 1.2;
       Resources.Powerup.play();
     }
-  }
-
-  override onCollisionEnd(): void {
-    this.collisionCount--;
   }
 }
