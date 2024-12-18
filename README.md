@@ -1,5 +1,9 @@
 # Spicy Slalom
 
+A small 8-bit style game made for a work game jam.
+
+Play as a skier and race down procedurally generated slopes to get a record in the online leaderboard.
+
 ## Dev Setup
 
 ### Database
