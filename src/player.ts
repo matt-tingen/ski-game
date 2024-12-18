@@ -87,17 +87,21 @@ export class Player extends Actor {
 
     const delta = (value: number) => value * (elapsedMs / 1000);
 
+    const pressed = (key: Keys) =>
+      engine.input.keyboard.isHeld(key) ||
+      engine.input.keyboard.wasPressed(key);
+
     if (
       this.controlsEnabled &&
-      (engine.input.keyboard.isHeld(Keys.A) ||
-        engine.input.keyboard.isHeld(Keys.Left) ||
+      (pressed(Keys.A) ||
+        pressed(Keys.Left) ||
         leftTurnButton.hasAttribute('data-active'))
     ) {
       this.lateralSpeed += delta(Config.playerTurnSpeed);
     } else if (
       this.controlsEnabled &&
-      (engine.input.keyboard.isHeld(Keys.D) ||
-        engine.input.keyboard.isHeld(Keys.Right) ||
+      (pressed(Keys.D) ||
+        pressed(Keys.Right) ||
         rightTurnButton.hasAttribute('data-active'))
     ) {
       this.lateralSpeed -= delta(Config.playerTurnSpeed);
