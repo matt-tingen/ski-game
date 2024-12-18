@@ -15,10 +15,18 @@ import { loader, Resources } from './resources';
 import { searchParams } from './searchParams';
 import { initVolume } from './volume';
 
-const startMusic = once(() => {
-  Resources.ArcadeSong.instanceVolume = 0.6;
-  Resources.ArcadeSong.loop = true;
-  Resources.ArcadeSong.play();
+const startMusic = once(async () => {
+  const play = () => {
+    Resources.ArcadeSong.instanceVolume = 0.6;
+    Resources.ArcadeSong.loop = true;
+    Resources.ArcadeSong.play();
+  };
+
+  if (loader.isLoaded()) {
+    play();
+  } else {
+    loader.on('afterload', play);
+  }
 });
 
 const requestMusic = () => {
