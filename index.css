@@ -258,3 +258,7 @@ label[for='volume-input'] {
   display: inline-block;
   transform: scaleY(-1);
 }
+
+#loading-error {
+  color: white;
+}
