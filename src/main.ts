@@ -64,7 +64,7 @@ try {
       requestMusic();
       game.showDebug(Boolean(searchParams.get('debug')));
     })
-    .catch(() => {});
+    .catch(onError);
 
   initVolume();
 
