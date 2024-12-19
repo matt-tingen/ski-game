@@ -43,7 +43,7 @@ const onError = () => {
 
 try {
   const game = new Engine({
-    width: 300,
+    width: 500,
     height: 800,
     canvasElementId: 'game',
     backgroundColor: Color.Transparent,

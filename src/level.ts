@@ -60,6 +60,7 @@ export class MyLevel extends Scene {
     this.addTrails();
     this.add(this.timer);
     this.camera.x = this.player.pos.x;
+    this.camera.zoom = 1.75;
 
     this.camera.addStrategy(
       new LockToActorAxisOffsetCameraStrategy(this.player, Axis.Y, 0.2),
@@ -192,7 +193,10 @@ export class MyLevel extends Scene {
       this.player.controlsEnabled = false;
       this.player.dead = true;
 
-      void this.camera.zoomOverTime(engine.drawHeight / this.mapBottom, 2000);
+      void this.camera.zoomOverTime(
+        (engine.drawHeight / this.mapBottom) * this.camera.zoom,
+        2000,
+      );
 
       if (finished) {
         showLeaderboard(this.seed, this.timer.ms);
