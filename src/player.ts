@@ -24,6 +24,8 @@ import { Ski } from './ski';
 import { SlolamSpeedup } from './SlolamSpeedup';
 import { Snowman } from './snowman';
 
+export const flipControlsStorageKey = 'flip-controls';
+
 // Export the collision group, useful for referencing in other actors
 export const PlayerCollisionGroup = CollisionGroupManager.create('player');
 
@@ -40,6 +42,7 @@ export class Player extends Actor {
   private lateralSpeed = 0;
   private pastSlowers = new Set<Entity>();
   private activeSlowers = new Set<Entity>();
+  private flipControls = Boolean(localStorage.getItem(flipControlsStorageKey));
 
   constructor(pos: Vector) {
     super({
@@ -95,19 +98,22 @@ export class Player extends Actor {
       engine.input.keyboard.isHeld(key) ||
       engine.input.keyboard.wasPressed(key);
 
-    if (
-      this.controlsEnabled &&
-      (pressed(Keys.A) ||
-        pressed(Keys.Left) ||
-        leftTurnButton.hasAttribute('data-active'))
-    ) {
+    const leftPressed =
+      pressed(Keys.A) ||
+      pressed(Keys.Left) ||
+      leftTurnButton.hasAttribute('data-active');
+
+    const rightPressed =
+      pressed(Keys.D) ||
+      pressed(Keys.Right) ||
+      rightTurnButton.hasAttribute('data-active');
+
+    const turnLeft = this.flipControls ? rightPressed : leftPressed;
+    const turnRight = this.flipControls ? leftPressed : rightPressed;
+
+    if (this.controlsEnabled && turnLeft) {
       this.lateralSpeed += delta(Config.playerTurnSpeed);
-    } else if (
-      this.controlsEnabled &&
-      (pressed(Keys.D) ||
-        pressed(Keys.Right) ||
-        rightTurnButton.hasAttribute('data-active'))
-    ) {
+    } else if (this.controlsEnabled && turnRight) {
       this.lateralSpeed -= delta(Config.playerTurnSpeed);
     } else {
       this.lateralSpeed +=

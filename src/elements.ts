@@ -11,3 +11,6 @@ export const rightTurnButton = document.getElementById(
   'right',
 ) as HTMLButtonElement;
 export const loadingError = document.getElementById('loading-error')!;
+export const flipControlsInput = document.getElementById(
+  'flip-controls',
+) as HTMLInputElement;

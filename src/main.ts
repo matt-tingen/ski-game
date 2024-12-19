@@ -2,6 +2,7 @@ import { once } from 'es-toolkit';
 import { Color, DisplayMode, Engine, ImageFiltering } from 'excalibur';
 import {
   canvasContainer,
+  flipControlsInput,
   leftTurnButton,
   loadingError,
   rightTurnButton,
@@ -10,6 +11,7 @@ import {
 import { changeName } from './leaderboard';
 import { MyLevel } from './level';
 import { MainMenu } from './mainMenu';
+import { flipControlsStorageKey } from './player';
 import { Reset } from './reset';
 import { loader, Resources } from './resources';
 import { searchParams } from './searchParams';
@@ -96,6 +98,17 @@ try {
     btn.addEventListener('pointerdown', onButtonDown);
     btn.addEventListener('pointerup', onButtonUp);
     btn.addEventListener('pointercancel', onButtonUp);
+  });
+
+  flipControlsInput.checked = Boolean(
+    localStorage.getItem(flipControlsStorageKey),
+  );
+  flipControlsInput.addEventListener('change', () => {
+    if (flipControlsInput.checked) {
+      localStorage.setItem(flipControlsStorageKey, 'true');
+    } else {
+      localStorage.removeItem(flipControlsStorageKey);
+    }
   });
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
