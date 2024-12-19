@@ -16,7 +16,7 @@ export class Snowman extends Actor {
   }
 
   override onInitialize() {
-    this.graphics.add(sprites.snowman);
+    this.graphics.add(Resources.Snowman.toSprite());
   }
 
   splat(velocity: Vector) {

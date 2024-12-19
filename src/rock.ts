@@ -1,4 +1,5 @@
 import { Actor, CollisionType, Vector } from 'excalibur';
+import { Resources } from './resources';
 import { sprites } from './sprites';
 
 export class Rock extends Actor {
@@ -13,6 +14,6 @@ export class Rock extends Actor {
   }
 
   override onInitialize() {
-    this.graphics.add(sprites.rock);
+    this.graphics.add(Resources.Rock.toSprite());
   }
 }

@@ -80,7 +80,9 @@ export const addRoom = (
 
   for (const tile of tilemap.tiles) {
     tile.addGraphic(
-      detailRandom() < 0.1 ? sprites.bankDetail : sprites.bankPlain,
+      detailRandom() < 0.1
+        ? Resources.SnowDetail.toSprite()
+        : Resources.SnowPlain.toSprite(),
     );
   }
 

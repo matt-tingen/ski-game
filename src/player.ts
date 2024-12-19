@@ -23,7 +23,6 @@ import { Rock } from './rock';
 import { Ski } from './ski';
 import { SlolamSpeedup } from './SlolamSpeedup';
 import { Snowman } from './snowman';
-import { sprites } from './sprites';
 
 // Export the collision group, useful for referencing in other actors
 export const PlayerCollisionGroup = CollisionGroupManager.create('player');
@@ -53,8 +52,11 @@ export class Player extends Actor {
   }
 
   override onInitialize(engine: Engine) {
-    this.graphics.add('up', sprites[`skier${this.skierColor}Up`]);
-    this.graphics.add('down', sprites[`skier${this.skierColor}Down`]);
+    const upSprite = Resources.SkierUp.toSprite();
+    const downSprite = Resources.SkierDown.toSprite();
+
+    this.graphics.add('up', upSprite);
+    this.graphics.add('down', downSprite);
 
     this.skis.forEach((ski) => {
       this.addChild(ski);
@@ -66,11 +68,11 @@ export class Player extends Actor {
         strategy: AnimationStrategy.Loop,
         frames: [
           {
-            graphic: sprites[`skier${this.skierColor}Down`],
+            graphic: downSprite,
             duration: 400,
           },
           {
-            graphic: sprites[`skier${this.skierColor}Up`],
+            graphic: upSprite,
             duration: 1000,
           },
         ],

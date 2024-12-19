@@ -24,6 +24,14 @@ import impactMining4PathWav from './audio/impactMining_004.wav';
 import powerupPath from './audio/powerup.wav';
 import { BG_HEX } from './bg';
 import checkerPath from './images/checker.png';
+import flagBluePath from './images/flagBlue.png';
+import flagRedPath from './images/flagRed.png';
+import rockPath from './images/rock.png';
+import skierDownPath from './images/skierDown.png';
+import skierUpPath from './images/skierUp.png';
+import snowDetailPath from './images/snowDetail.png';
+import snowmanPath from './images/snowman.png';
+import snowPlainPath from './images/snowPlain.png';
 import textTilemapPath from './images/textTilemap.png';
 import tilemapPath from './images/tilemap.png';
 import { SoundChannel } from './SoundChannel';
@@ -33,7 +41,15 @@ export const sfx = new SoundChannel('sfx', defaultVolume);
 export const music = new SoundChannel('music', defaultVolume);
 
 export const Resources = {
+  SkierUp: new ImageSource(skierUpPath),
+  SkierDown: new ImageSource(skierDownPath),
+  SnowPlain: new ImageSource(snowPlainPath),
+  SnowDetail: new ImageSource(snowDetailPath),
+  Rock: new ImageSource(rockPath),
   Checker: new ImageSource(checkerPath),
+  Snowman: new ImageSource(snowmanPath),
+  FlagBlue: new ImageSource(flagBluePath),
+  FlagRed: new ImageSource(flagRedPath),
 
   Tilemap: new ImageSource(tilemapPath),
   TextTilemap: new ImageSource(textTilemapPath),

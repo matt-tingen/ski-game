@@ -23,7 +23,9 @@ export class SlolamFlag extends Actor {
 
   override onInitialize() {
     this.graphics.add(
-      this.direction === 'right' ? sprites.flagRedSmall : sprites.flagBlueSmall,
+      this.direction === 'right'
+        ? Resources.FlagRed.toSprite()
+        : Resources.FlagBlue.toSprite(),
     );
   }
 
