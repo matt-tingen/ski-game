@@ -102,7 +102,7 @@ try {
   (window as any).changeName = changeName;
   // eslint-disable-next-line no-console
   console.log(
-    "To change your leaderboard name, run `changeName('...')` in the console",
+    "To change your leaderboard name, run `changeName('...')` in the console. This is not retroactive; it will only apply for records uploaded after the change.",
   );
 } catch {
   onError();
