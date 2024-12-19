@@ -136,14 +136,10 @@ export class Player extends Actor {
     this.activeSlowers.clear();
 
     if (collisionCount) {
-      const pre = this.downhillSpeed;
-
       for (; collisionCount > 0; collisionCount--) {
         this.downhillSpeed -=
           Config.playerCollisionFriction * this.downhillSpeed;
       }
-
-      console.log({ pre, post: this.downhillSpeed });
     } else {
       this.downhillSpeed += delta(Config.playerDownhillAcceleration);
     }
